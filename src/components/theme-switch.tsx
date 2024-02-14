@@ -1,9 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Button } from 'antd';
 
-// import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
-// import { changeTheme } from '@/lib/actions';
-// import { setCookie } from 'cookies-next';
 import { CustomIcons } from '@/lib/icons';
 import { useCookies } from 'react-cookie';
 
@@ -15,6 +12,7 @@ const ThemeSwitch = () => {
   useEffect(() => {
     if (!cookies['theme-mode']) {
       setCookie('theme-mode', 'light');
+      document.body.classList.add(`${theme}-mode`);
     }
     setTheme(cookies['theme-mode']);
   });
@@ -23,6 +21,8 @@ const ThemeSwitch = () => {
     const value = theme === 'dark' ? 'light' : 'dark';
     setTheme(value);
     setCookie('theme-mode', value);
+    document.body.classList.remove(`${theme}-mode`);
+    document.body.classList.add(`${value}-mode`);
   };
 
   return (
