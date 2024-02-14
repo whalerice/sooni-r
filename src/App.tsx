@@ -9,15 +9,17 @@ import ko from 'antd/locale/ko_KR';
 
 import { RouterProvider } from 'react-router-dom';
 import { router } from '@/lib/router';
+import { useCookies } from 'react-cookie';
 import '@/scss/index.scss';
 
 const prefix: string = 'qt';
 const px2rem = px2remTransformer({
   rootValue: 10, // 10px = 1rem;
 });
-const themeMode = 'light';
 
 function App() {
+  const [cookies] = useCookies(['theme-mode']);
+
   return (
     <StyleProvider
       transformers={[legacyLogicalPropertiesTransformer, px2rem]}
@@ -25,7 +27,10 @@ function App() {
       autoClear
     >
       <ConfigProvider
-        theme={{ algorithm: themeAntModes[themeMode], ...themeConfig }}
+        theme={{
+          algorithm: themeAntModes[cookies['theme-mode']],
+          ...themeConfig,
+        }}
         prefixCls={prefix}
         iconPrefixCls={prefix}
         locale={ko}
