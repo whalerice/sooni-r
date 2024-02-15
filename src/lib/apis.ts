@@ -1,7 +1,13 @@
 import axios from 'axios';
+import qs from 'qs';
 // import { saveSessionCookie } from '@/lib/actions';
 const instance = axios.create({
-  baseURL: import.meta.env.VITE_APP_API_URL + import.meta.env.VITE_APP_PATH,
+  // baseURL: import.meta.env.VITE_APP_API_URL + import.meta.env.VITE_APP_PATH,
+  paramsSerializer: (value) =>
+    qs.stringify(value, {
+      arrayFormat: 'repeat',
+      allowDots: true,
+    }),
 });
 
 type SendParams = {
@@ -14,7 +20,7 @@ type SendParams = {
 };
 // language: lang,
 const send = async (options: SendParams) => {
-//   const sessionToken = cookies().get('x-qbot-session')?.value;
+  //   const sessionToken = cookies().get('x-qbot-session')?.value;
 
   const { url, method, data, params, isForm } = options;
   try {
@@ -32,9 +38,9 @@ const send = async (options: SendParams) => {
       withCredentials: true,
     });
 
-    if (response.headers['set-cookie']) {
-    //   saveSessionCookie(response.headers['set-cookie'][0]);
-    }
+    // if (response.headers['set-cookie']) {
+    //   //   saveSessionCookie(response.headers['set-cookie'][0]);
+    // }
 
     if (response.status !== 200) {
       throw response;
@@ -42,12 +48,9 @@ const send = async (options: SendParams) => {
 
     return response.data;
   } catch (error: any) {
-    // console.log(error);
-
-    if (error.response.status === 422) {
-      throw new Error(error.response.data.message);
+    if (error.response.data) {
+      throw error.response.data;
     }
-
     throw error;
   }
 };
@@ -63,10 +66,14 @@ const request = {
 };
 
 export const apis = {
+  app: {
+    health: () => request.get('/api/app/health'),
+  },
   user: {
     login: (data: { loginId: any; password: any }) =>
-      request.post('/user/login', data),
-    logout: (data: { user: { id: any } }) => request.post('/user/logout', data),
-    sessionTouch: () => request.get('/user/session-touch'),
+      request.post('/api/user/login', data),
+    logout: (data: { user: { id: any } }) =>
+      request.post('/api/user/logout', data),
+    sessionTouch: () => request.get('/api/user/session-touch'),
   },
 };

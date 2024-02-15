@@ -1,7 +1,13 @@
+import { apis } from '@/lib/apis';
 import { Button } from 'antd';
-import { useNavigate } from 'react-router-dom';
+import { useCookies } from 'react-cookie';
 
 export default function Logout() {
-  const navigate = useNavigate();
-  return <Button onClick={() => navigate('/login')}>로그아웃</Button>;
+  const [cookies, removeCookie] = useCookies(['user']);
+
+  const onLogout = async () => {
+    await apis.user.logout({ user: { id: cookies.user.id } });
+    removeCookie('user', null);
+  };
+  return <Button onClick={onLogout}>로그아웃</Button>;
 }

@@ -10,10 +10,6 @@ const ThemeSwitch = () => {
   const [theme, setTheme] = useState<string>('');
 
   useEffect(() => {
-    if (!cookies['theme-mode']) {
-      setCookie('theme-mode', 'light');
-      document.body.classList.add(`${theme}-mode`);
-    }
     setTheme(cookies['theme-mode']);
   });
 

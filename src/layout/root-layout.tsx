@@ -7,18 +7,33 @@ import {
 import { themeAntModes, themeConfig } from '@/lib/theme-config';
 import ko from 'antd/locale/ko_KR';
 
-import { RouterProvider } from 'react-router-dom';
-import { router } from '@/lib/router';
 import { useCookies } from 'react-cookie';
 import '@/scss/index.scss';
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const prefix: string = 'qt';
 const px2rem = px2remTransformer({
   rootValue: 10, // 10px = 1rem;
 });
+function RootLayout({ children }: { children: React.ReactNode }) {
+  const navigate = useNavigate();
 
-function App() {
-  const [cookies] = useCookies(['theme-mode']);
+  const { pathname } = location;
+  const [cookies, setCookie] = useCookies(['theme-mode', 'user']);
+
+  useEffect(() => {
+    if (!cookies['theme-mode']) {
+      setCookie('theme-mode', 'light');
+      document.body.classList.add(`light-mode`);
+    }
+
+    if (cookies['user'] && pathname === '/login') {
+      navigate('/');
+    } else if (!cookies['user'] && pathname !== '/login') {
+      navigate('/login');
+    }
+  }, [cookies['user']]);
 
   return (
     <StyleProvider
@@ -35,10 +50,9 @@ function App() {
         iconPrefixCls={prefix}
         locale={ko}
       >
-        <RouterProvider router={router} />
+        {children}
       </ConfigProvider>
     </StyleProvider>
   );
 }
-
-export default App;
+export default RootLayout;

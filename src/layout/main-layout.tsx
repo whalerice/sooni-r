@@ -16,9 +16,10 @@ export default function MainLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const [cookies] = useCookies(['theme-mode']);
+  const [cookies] = useCookies(['theme-mode', 'x-qbot-session']);
   const { token } = theme.useToken();
   const [collapsed, setCollapsed] = useState(false);
+
   return (
     <>
       <Sider

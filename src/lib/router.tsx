@@ -4,14 +4,17 @@ import Ticket from '@/pages/ticket';
 import MainLayout from '@/layout/main-layout';
 import Dashboard from '@/pages/dashboard';
 import Answer from '@/pages/answer';
+import RootLayout from '@/layout/root-layout';
 
 const routes: RouteObject[] = [
   {
     path: '/',
     element: (
-      <MainLayout>
-        <Outlet />
-      </MainLayout>
+      <RootLayout>
+        <MainLayout>
+          <Outlet />
+        </MainLayout>
+      </RootLayout>
     ),
     children: [
       {
@@ -34,10 +37,13 @@ const routes: RouteObject[] = [
       },
     ],
   },
-
   {
     path: '/login',
-    element: <Login />,
+    element: (
+      <RootLayout>
+        <Login />
+      </RootLayout>
+    ),
   },
 ];
 

@@ -1,14 +1,15 @@
+import { apis } from '@/lib/apis';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { Button, Form, Input, Typography } from 'antd';
 import { useEffect, useState } from 'react';
+import { useCookies } from 'react-cookie';
 import { useNavigate } from 'react-router-dom';
-// import { useFormState, useFormStatus } from 'react-dom';
 
 const { Text } = Typography;
 
-export default function LoginForm() {
-  //   const [errorMessage, dispatch] = useFormState(authenticate, undefined);
-  //   const status = useFormStatus();
+function LoginForm() {
+  const [_, setCookie] = useCookies(['user']);
+
   const [form] = Form.useForm();
   const [clientReady, setClientReady] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -16,8 +17,21 @@ export default function LoginForm() {
   const navigate = useNavigate();
 
   const onLogin = async () => {
-    console.log('login');
-    navigate('/');
+    const data = form.getFieldsValue();
+
+    try {
+      setIsLoading(true);
+      const response = await apis.user.login(data);
+      setCookie('user', JSON.stringify(response));
+      navigate('/');
+    } catch (error: any) {
+      if (error.message) {
+        setErrorMessage(error.message);
+      }
+      throw error;
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -68,3 +82,5 @@ export default function LoginForm() {
     </>
   );
 }
+
+export default LoginForm;
