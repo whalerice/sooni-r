@@ -1,6 +1,6 @@
 import axios from 'axios';
 import qs from 'qs';
-// import { saveSessionCookie } from '@/lib/actions';
+
 const instance = axios.create({
   // baseURL: import.meta.env.VITE_APP_API_URL + import.meta.env.VITE_APP_PATH,
   paramsSerializer: (value) =>
@@ -30,17 +30,11 @@ const send = async (options: SendParams) => {
       data,
       params: params,
       headers: {
-        // ...(sessionToken ? { 'x-qbot-session': sessionToken } : {}),
-        // Authorization: `Bearer ${process.env.token}`,
         Accept: 'application/json',
         ...(isForm ? { 'Content-Type': 'multipart/form-data' } : {}),
       },
       withCredentials: true,
     });
-
-    // if (response.headers['set-cookie']) {
-    //   //   saveSessionCookie(response.headers['set-cookie'][0]);
-    // }
 
     if (response.status !== 200) {
       throw response;

@@ -62,3 +62,11 @@
     border: 0;
   }
 }
+
+.user-info-layer {
+  padding: 0.5rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  // [class*='avatar'] {}
+}

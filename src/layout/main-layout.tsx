@@ -1,10 +1,13 @@
 import Logout from '@/components/logout';
 import ThemeSwitch from '@/components/theme-switch';
 import Navigation from '@/layout/navigation';
+import UserInfo from '@/layout/user-info';
 
 import clsx from 'clsx';
 import { Button, Layout, Space, theme } from 'antd';
 import { MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons';
+import CounselorStatus from '@/layout/counselor-status';
+
 import { Suspense, useState } from 'react';
 import { useCookies } from 'react-cookie';
 import { NavLink } from 'react-router-dom';
@@ -16,7 +19,7 @@ export default function MainLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const [cookies] = useCookies(['theme-mode', 'x-qbot-session']);
+  const [cookies] = useCookies(['theme-mode', 'x-qbot-session', 'user']);
   const { token } = theme.useToken();
   const [collapsed, setCollapsed] = useState(false);
 
@@ -45,6 +48,10 @@ export default function MainLayout({
             className="btn-collapse"
           />
           <Space align="center">
+            {cookies.user && cookies.user.type !== 'SUPER' && (
+              <CounselorStatus status={cookies.user.status} />
+            )}
+            <UserInfo user={cookies.user} />
             <ThemeSwitch />
             <Logout />
           </Space>
