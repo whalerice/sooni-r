@@ -4,6 +4,7 @@ import { Card, Layout } from 'antd';
 import '@/scss/login.scss';
 import { apis } from '@/lib/apis';
 import { useEffect } from 'react';
+import ThemeSwitch from '@/components/theme-switch';
 
 const test = async () => {
   try {
@@ -21,7 +22,7 @@ function Login() {
 
   return (
     <Layout className="login-area">
-      <Card title="Login" className="login-card">
+      <Card title="Login" className="login-card" extra={<ThemeSwitch />}>
         <LoginForm />
       </Card>
     </Layout>

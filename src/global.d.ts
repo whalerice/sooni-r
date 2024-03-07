@@ -11,41 +11,60 @@ declare global {
     [key: string]: string;
   };
 
-  type Avatar = {
-    id?: number;
-    url?: string;
-    type?: string;
-    fullUrl?: string;
+  type Login = {
+    loginId: string;
+    password: string;
   };
 
-  type UserInfo = {
+  type Logout = {
+    user: { id: any };
+  };
+
+  type Avatar = {
+    id: number;
+    url: string;
+    type: string;
+    fullUrl: string;
+  };
+  type Company = {
+    id: number;
+  };
+  type Rank = {
+    id: number;
+    label: string;
+  };
+  type Team = {
+    id: number;
     name: string;
-    sub: string;
+    avatar: Avatar;
+    outerUrl: boolean;
+  };
+
+  type User = {
+    avatar: Avatar;
+    company: Company;
+    companyId: number;
+    currentCapacity: number;
+    greeting: string;
     id: string;
-    companyId?: number;
+    isLeader: boolean;
+    level: number;
+    loginId: string;
+    maxCapacity: number;
+    name: string;
+    rank: Rank;
+    status: string;
+    team: Team;
+    type: string;
+  };
+
+  type MenuListType = {
     type?: string;
-    loginId?: string;
-    avatar?: Avatar;
-    team?: {
-      id?: number;
-      name?: string;
-      avatar?: {
-        id?: number;
-        url?: string;
-        type?: string;
-        fullUrl?: string;
-      };
-      outerUrl?: boolean;
-    };
-    status?: string;
-    level?: number;
-    currentCapacity?: number;
-    maxCapacity?: number;
-    greeting?: string;
-    isLeader?: false;
-    rank?: { id?: number; label?: string };
-    iat?: number;
-    exp?: number;
-    jti?: string;
+    label?: string;
+    path?: string;
+    page?: string;
+    icon?: object;
+    children?: MenuListType[];
+    haveAuthority?: string[];
   };
 }

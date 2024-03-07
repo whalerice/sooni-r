@@ -1,23 +1,25 @@
+import { AgentStatus } from '@/lib/enums';
+import { useAuthStore } from '@/stores/auth';
 import { Badge, Select, Space, Typography } from 'antd';
-import { useState } from 'react';
 const { Text } = Typography;
 
-function CounselorStatus({ status }: { status: string }) {
-  const [value, setValue] = useState<string>(status);
+function CounselorStatus() {
+  const { status } = useAuthStore();
 
   const onChange = (value: any) => {
     console.log(value);
+    useAuthStore.setState({ status: value.value });
   };
 
   return (
     <Select
       onChange={onChange}
       labelInValue
-      defaultValue={value}
+      defaultValue={status}
       style={{ width: 120 }}
       options={[
         {
-          value: 'ACTIVE',
+          value: AgentStatus.ACTIVE,
           label: (
             <Space>
               <Badge status="success" />
@@ -26,7 +28,7 @@ function CounselorStatus({ status }: { status: string }) {
           ),
         },
         {
-          value: 'OFFLINE',
+          value: AgentStatus.OFFLINE,
           label: (
             <Space>
               <Badge status="error" />
@@ -35,7 +37,7 @@ function CounselorStatus({ status }: { status: string }) {
           ),
         },
         {
-          value: 'AWAY',
+          value: AgentStatus.AWAY,
           label: (
             <Space>
               <Badge status="warning" />

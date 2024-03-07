@@ -1,17 +1,14 @@
 import { apis } from '@/lib/apis';
+import { useAuthStore } from '@/stores/auth';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { Button, Form, Input, Typography } from 'antd';
 import { useEffect, useState } from 'react';
-import { useCookies } from 'react-cookie';
 import { useNavigate } from 'react-router-dom';
 
 const { Text } = Typography;
 
 function LoginForm() {
-  const [_, setCookie] = useCookies(['user']);
-
   const [form] = Form.useForm();
-  const [clientReady, setClientReady] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>('');
   const navigate = useNavigate();
@@ -20,23 +17,19 @@ function LoginForm() {
     const data = form.getFieldsValue();
 
     try {
-      setIsLoading(true);
       const response = await apis.user.login(data);
-      setCookie('user', JSON.stringify(response));
+      useAuthStore.setState({ user: response });
       navigate('/');
     } catch (error: any) {
       if (error.message) {
         setErrorMessage(error.message);
       }
-      throw error;
     } finally {
       setIsLoading(false);
     }
   };
 
-  useEffect(() => {
-    setClientReady(true);
-  }, []);
+  useEffect(() => {}, []);
   return (
     <>
       <Form form={form} name="login" onFinish={onLogin}>
@@ -65,7 +58,6 @@ function LoginForm() {
               htmlType="submit"
               loading={isLoading}
               disabled={
-                !clientReady ||
                 !form.isFieldsTouched(true) ||
                 !!form.getFieldsError().filter(({ errors }) => errors.length)
                   .length

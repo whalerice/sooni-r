@@ -1,35 +1,30 @@
-import Logout from '@/components/logout';
-import ThemeSwitch from '@/components/theme-switch';
 import Navigation from '@/layout/navigation';
-import UserInfo from '@/layout/user-info';
 
 import clsx from 'clsx';
 import { Button, Layout, Space, theme } from 'antd';
-import { MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons';
-import CounselorStatus from '@/layout/counselor-status';
 
 import { Suspense, useState } from 'react';
-import { useCookies } from 'react-cookie';
 import { NavLink } from 'react-router-dom';
+import { useThemeStore } from '@/stores/theme';
+import HeaderArea from './header';
 
-const { Header, Content, Sider } = Layout;
+const { Content, Sider } = Layout;
 
 export default function MainLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const [cookies] = useCookies(['theme-mode', 'x-qbot-session', 'user']);
+  const { themeName, isCollapsed } = useThemeStore();
   const { token } = theme.useToken();
-  const [collapsed, setCollapsed] = useState(false);
 
   return (
     <>
       <Sider
         trigger={null}
         collapsible
-        collapsed={collapsed}
-        theme={cookies['theme-mode']}
+        collapsed={isCollapsed}
+        theme={themeName}
       >
         <div style={{ height: token.Layout?.headerHeight }} className="logo">
           <NavLink to="/">logo</NavLink>
@@ -39,23 +34,8 @@ export default function MainLayout({
         </Suspense>
       </Sider>
 
-      <Layout className={clsx('container', cookies['theme-mode'])}>
-        <Header className="header">
-          <Button
-            type="text"
-            icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-            onClick={() => setCollapsed(!collapsed)}
-            className="btn-collapse"
-          />
-          <Space align="center">
-            {cookies.user && cookies.user.type !== 'SUPER' && (
-              <CounselorStatus status={cookies.user.status} />
-            )}
-            <UserInfo user={cookies.user} />
-            <ThemeSwitch />
-            <Logout />
-          </Space>
-        </Header>
+      <Layout className={clsx('container', themeName)}>
+        <HeaderArea />
         <Content>
           {/* <div className="page-title">{menuInfo[pathname].pageTitle}</div> */}
           {children}

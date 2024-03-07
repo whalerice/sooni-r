@@ -1,4 +1,4 @@
-import { ConfigProvider } from 'antd';
+import { ConfigProvider, Layout } from 'antd';
 import {
   legacyLogicalPropertiesTransformer,
   px2remTransformer,
@@ -11,48 +11,56 @@ import { useCookies } from 'react-cookie';
 import '@/scss/index.scss';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useThemeStore } from '@/stores/theme';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import { queryClient } from '@/lib/query-client';
+import { QueryClientProvider } from '@tanstack/react-query';
+import { useAuthStore } from '@/stores/auth';
 
-const prefix: string = 'qt';
 const px2rem = px2remTransformer({
   rootValue: 10, // 10px = 1rem;
 });
 function RootLayout({ children }: { children: React.ReactNode }) {
+  const { pathname } = location;
+  const { isDarkMode, themeName, prefix } = useThemeStore();
+  const { user } = useAuthStore();
   const navigate = useNavigate();
 
-  const { pathname } = location;
-  const [cookies, setCookie] = useCookies(['theme-mode', 'user']);
-
   useEffect(() => {
-    if (!cookies['theme-mode']) {
-      setCookie('theme-mode', 'light');
-      document.body.classList.add(`light-mode`);
+    if (isDarkMode) {
+      document.body.classList.add(themeName);
+    } else {
+      document.body.classList.remove('dark');
     }
 
-    if (cookies['user'] && pathname === '/login') {
+    if (user && pathname === '/login') {
       navigate('/');
-    } else if (!cookies['user'] && pathname !== '/login') {
+    } else if (!user && pathname !== '/login') {
       navigate('/login');
     }
-  }, [cookies['user']]);
+  }, [user, isDarkMode]);
 
   return (
-    <StyleProvider
-      transformers={[legacyLogicalPropertiesTransformer, px2rem]}
-      hashPriority="high"
-      autoClear
-    >
-      <ConfigProvider
-        theme={{
-          algorithm: themeAntModes[cookies['theme-mode']],
-          ...themeConfig,
-        }}
-        prefixCls={prefix}
-        iconPrefixCls={prefix}
-        locale={ko}
+    <QueryClientProvider client={queryClient}>
+      <StyleProvider
+        transformers={[legacyLogicalPropertiesTransformer, px2rem]}
+        hashPriority="high"
+        autoClear
       >
-        {children}
-      </ConfigProvider>
-    </StyleProvider>
+        <ConfigProvider
+          theme={{
+            algorithm: themeAntModes[themeName],
+            ...themeConfig,
+          }}
+          prefixCls={prefix}
+          iconPrefixCls={prefix}
+          locale={ko}
+        >
+          <Layout>{children}</Layout>
+          <ReactQueryDevtools initialIsOpen={false} />
+        </ConfigProvider>
+      </StyleProvider>
+    </QueryClientProvider>
   );
 }
 export default RootLayout;

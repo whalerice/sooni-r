@@ -12,12 +12,15 @@ import {
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import { useState } from 'react';
 import React from 'react';
+import { useAuthStore } from '@/stores/auth';
+import { AgentStatus, RoleType } from '@/lib/enums';
 
 const { Text } = Typography;
 
 const { useToken } = theme;
 
-export default function UserInfo({ user }: { user: UserInfo }) {
+export default function UserInfo() {
+  const { user } = useAuthStore();
   const { token } = useToken();
   const [open, setOpen] = useState(false);
   const [info, setInfo] = useState({ title: '' });
@@ -74,9 +77,9 @@ export default function UserInfo({ user }: { user: UserInfo }) {
         dropdownRender={(menu) => (
           <div style={{ ...contentStyle, minWidth: '16rem' }}>
             <div className="user-info-layer">
-              {user.type !== 'SUPER' ? (
+              {user?.type !== RoleType.SUPER ? (
                 <Avatar
-                  src={<img src={user.avatar?.url} alt="avatar" />}
+                  src={<img src={user?.avatar?.url} alt="avatar" />}
                   size="large"
                 />
               ) : (
@@ -84,11 +87,11 @@ export default function UserInfo({ user }: { user: UserInfo }) {
               )}
 
               <Space direction="vertical" size={0}>
-                <Text>{user.name}</Text>
+                <Text>{user?.name}</Text>
                 <Text type="secondary" strong>
-                  {user.loginId}
+                  {user?.loginId}
                 </Text>
-                <Text type="secondary">{user.team?.name}</Text>
+                <Text type="secondary">{user?.team?.name}</Text>
               </Space>
             </div>
             <Divider style={{ margin: 0 }} />
@@ -100,18 +103,18 @@ export default function UserInfo({ user }: { user: UserInfo }) {
       >
         <Button onClick={(e) => e.preventDefault()}>
           <Space>
-            {user.type !== 'SUPER' ? (
+            {user?.type !== RoleType.SUPER ? (
               <Avatar
-                src={<img src={user.avatar?.url} alt="avatar" />}
+                src={<img src={user?.avatar?.url} alt="avatar" />}
                 size={18}
               />
             ) : (
               <Avatar icon={<UserOutlined />} size={18} />
             )}
 
-            <Text strong>{user.name}</Text>
+            <Text strong>{user?.name}</Text>
             <Text type="secondary" style={{ fontSize: '1.2rem' }}>
-              {user.team?.name}
+              {user?.team?.name}
             </Text>
           </Space>
         </Button>

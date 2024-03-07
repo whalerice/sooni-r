@@ -64,10 +64,8 @@ export const apis = {
     health: () => request.get('/api/app/health'),
   },
   user: {
-    login: (data: { loginId: any; password: any }) =>
-      request.post('/api/user/login', data),
-    logout: (data: { user: { id: any } }) =>
-      request.post('/api/user/logout', data),
+    login: (data: Login) => request.post('/api/user/login', data),
+    logout: (data: Logout) => request.post('/api/user/logout', data),
     sessionTouch: () => request.get('/api/user/session-touch'),
   },
 };
