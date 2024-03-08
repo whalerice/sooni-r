@@ -7,7 +7,6 @@ import {
 import { themeAntModes, themeConfig } from '@/lib/theme-config';
 import ko from 'antd/locale/ko_KR';
 
-import { useCookies } from 'react-cookie';
 import '@/scss/index.scss';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -33,11 +32,11 @@ function RootLayout({ children }: { children: React.ReactNode }) {
       document.body.classList.remove('dark');
     }
 
-    if (user && pathname === '/login') {
-      navigate('/');
-    } else if (!user && pathname !== '/login') {
-      navigate('/login');
-    }
+    // if (user && pathname === '/login') {
+    //   navigate('/');
+    // } else if (!user && pathname !== '/login') {
+    //   navigate('/login');
+    // }
   }, [user, isDarkMode]);
 
   return (
@@ -56,7 +55,7 @@ function RootLayout({ children }: { children: React.ReactNode }) {
           iconPrefixCls={prefix}
           locale={ko}
         >
-          <Layout>{children}</Layout>
+          {children}
           <ReactQueryDevtools initialIsOpen={false} />
         </ConfigProvider>
       </StyleProvider>

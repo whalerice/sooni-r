@@ -41,20 +41,20 @@ declare global {
   };
 
   type User = {
-    avatar: Avatar;
+    avatar?: Avatar;
     company: Company;
     companyId: number;
     currentCapacity: number;
-    greeting: string;
+    greeting?: string;
     id: string;
-    isLeader: boolean;
-    level: number;
+    isLeader?: boolean;
+    level?: number;
     loginId: string;
-    maxCapacity: number;
+    maxCapacity?: number;
     name: string;
-    rank: Rank;
-    status: string;
-    team: Team;
+    rank?: Rank;
+    status?: string;
+    team?: Team;
     type: string;
   };
 

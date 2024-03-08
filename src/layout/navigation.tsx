@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { NavLink } from 'react-router-dom';
 import { GetProp, Menu, MenuProps } from 'antd';
 import {
   DashboardOutlined,
@@ -19,22 +20,19 @@ import {
   FieldTimeOutlined,
   CommentOutlined,
 } from '@ant-design/icons';
-import { router } from '@/lib/router';
+// import { router } from '@/lib/router';
+import { useThemeStore } from '@/stores/theme';
 
 type MenuItem = GetProp<MenuProps, 'items'>[number];
 
 export default function Navigation() {
+  const { themeName } = useThemeStore();
   const [selectedKeys, setSelectedKeys] = useState(['1']);
   const [openKeys, setOpenKeys] = useState(['sub1']);
 
-  const [nav] = useState<any>(router.routes[0].children);
+  // const [nav] = useState<any>(router.routes[0].children);
 
-  console.log(nav);
-
-  const onClick: MenuProps['onClick'] = (e) => {
-    console.log('click ', e);
-    // setCurrent(e.key);
-  };
+  // console.log(nav);
 
   const items: MenuProps['items'] = [
     {
@@ -42,17 +40,17 @@ export default function Navigation() {
       label: '대시보드',
     },
     {
-      label: <a href="/">대시보드</a>,
+      label: <NavLink to="/">대시보드</NavLink>,
       key: 'dashboard',
       icon: <DashboardOutlined />,
     },
     {
-      label: <a href="/monitor">모니터링</a>,
+      label: <NavLink to="/monitor">모니터링</NavLink>,
       key: 'monitor',
       icon: <DashboardOutlined />,
     },
     {
-      label: <a href="/report">리포트</a>,
+      label: <NavLink to="/report">리포트</NavLink>,
       key: 'report',
       icon: <DashboardOutlined />,
     },
@@ -61,7 +59,7 @@ export default function Navigation() {
       label: '회사',
     },
     {
-      label: <a href="">회사관리</a>,
+      label: <NavLink to="">회사관리</NavLink>,
       key: 'company',
       icon: <DashboardOutlined />,
     },
@@ -70,7 +68,7 @@ export default function Navigation() {
       label: '티켓',
     },
     {
-      label: <a href="/ticket">모든티켓조회</a>,
+      label: <NavLink to="/ticket">모든티켓조회</NavLink>,
       key: 'ticket',
       icon: <DashboardOutlined />,
     },
@@ -79,27 +77,27 @@ export default function Navigation() {
       label: '관리',
     },
     {
-      label: <a href="/team">팀</a>,
+      label: <NavLink to="/team">팀</NavLink>,
       key: 'team',
       icon: <DashboardOutlined />,
     },
     {
-      label: <a href="/member">팀원관리</a>,
+      label: <NavLink to="/member">팀원관리</NavLink>,
       key: 'member',
       icon: <DashboardOutlined />,
     },
     {
-      label: <a href="/manager">관리자</a>,
+      label: <NavLink to="/manager">관리자</NavLink>,
       key: 'manager',
       icon: <DashboardOutlined />,
     },
     {
-      label: <a href="/counselor">상담사</a>,
+      label: <NavLink to="/counselor">상담사</NavLink>,
       key: 'counselor',
       icon: <DashboardOutlined />,
     },
     {
-      label: <a href="/message">챗봇메세지</a>,
+      label: <NavLink to="/message">챗봇메세지</NavLink>,
       key: 'message',
       icon: <DashboardOutlined />,
     },
@@ -152,7 +150,7 @@ export default function Navigation() {
       label: '음성설정',
     },
     {
-      label: <a href="/scenario">시나리오</a>,
+      label: <NavLink to="/scenario">시나리오</NavLink>,
       key: 'scenario',
       icon: <DashboardOutlined />,
     },
@@ -160,11 +158,11 @@ export default function Navigation() {
 
   return (
     <Menu
-      onClick={onClick}
       defaultSelectedKeys={selectedKeys}
       defaultOpenKeys={openKeys}
       mode="inline"
       items={items}
+      theme={themeName}
     />
   );
 }

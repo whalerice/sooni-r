@@ -1,32 +1,38 @@
-// .#{$prefix}-layout {}
-
-.#{$prefix}-layout-sider-light {
-  background-color: $sider-bg-light;
+body {
+  background-color: $body-bg-light;
+  color: $color-light;
+  &.dark {
+    background-color: $body-bg-dark;
+    color: $color-dark;
+  }
 }
-.#{$prefix}-layout-sider-dark {
-  background-color: $sider-bg-dark;
+
+.#{$prefix}-layout {
+  &-sider {
+    background-color: $bg-light;
+    .sider-header {
+      background-color: $bg-light;
+    }
+  }
 }
 
-// .light {
-//   &.#{$prefix}-layout {
-//     &.container {
-//       background-color: $body-bg-light;
-//       color: $color-light;
-//     }
-//   }
-//   .#{$prefix}-layout-header {
-//     background-color: $header-bg-light;
-//   }
-// }
+.#{$prefix}-menu-light {
+  &.#{$prefix}-menu-root.#{$prefix}-menu-inline {
+    border-inline-end: 0;
+    border-right-width: 0;
+  }
+}
 
-// .dark {
-//   &.#{$prefix}-layout {
-//     &.container {
-//       background-color: $body-bg-dark;
-//       color: $color-dark;
-//     }
-//   }
-//   .#{$prefix}-layout-header {
-//     background-color: $header-bg-dark;
-//   }
-// }
+.dark {
+  .#{$prefix}-layout {
+    &-header {
+      background-color: $bg-dark;
+    }
+    &-sider {
+      background-color: $bg-dark;
+      .sider-header {
+        background-color: $bg-dark;
+      }
+    }
+  }
+}

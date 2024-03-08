@@ -1,10 +1,9 @@
 import Navigation from '@/layout/navigation';
 
 import clsx from 'clsx';
+import { NavLink } from 'react-router-dom';
 import { Button, Layout, Space, theme } from 'antd';
 
-import { Suspense, useState } from 'react';
-import { NavLink } from 'react-router-dom';
 import { useThemeStore } from '@/stores/theme';
 import HeaderArea from './header';
 
@@ -17,6 +16,7 @@ export default function MainLayout({
 }) {
   const { themeName, isCollapsed } = useThemeStore();
   const { token } = theme.useToken();
+  console.log(token);
 
   return (
     <>
@@ -26,15 +26,23 @@ export default function MainLayout({
         collapsed={isCollapsed}
         theme={themeName}
       >
-        <div style={{ height: token.Layout?.headerHeight }} className="logo">
-          <NavLink to="/">logo</NavLink>
-        </div>
-        <Suspense fallback={<div>Loading...</div>}>
-          <Navigation />
-        </Suspense>
-      </Sider>
+        <NavLink
+          to="/"
+          style={{ height: token.Layout?.headerHeight }}
+          className="sider-header"
+        >
+          <div className={clsx('logo', isCollapsed ? 'mini' : '')}>
+            <img src="/images/chatbot.png" alt="SOONi" />
+            <span className={themeName}>SOONi</span>
+          </div>
+        </NavLink>
 
-      <Layout className={clsx('container', themeName)}>
+        <Navigation />
+      </Sider>
+      <Layout
+        className={isCollapsed ? 'mini' : ''}
+        style={{ paddingTop: token.Layout?.headerHeight }}
+      >
         <HeaderArea />
         <Content>
           {/* <div className="page-title">{menuInfo[pathname].pageTitle}</div> */}

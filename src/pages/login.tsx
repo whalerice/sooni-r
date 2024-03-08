@@ -21,11 +21,11 @@ function Login() {
   });
 
   return (
-    <Layout className="login-area">
+    <div className="login-area">
       <Card title="Login" className="login-card" extra={<ThemeSwitch />}>
         <LoginForm />
       </Card>
-    </Layout>
+    </div>
   );
 }
 

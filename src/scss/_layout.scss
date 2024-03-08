@@ -1,70 +1,85 @@
-// .#{$prefix}-layout {
-//   &-sider {
-//     position: fixed;
-//     top: 0;
-//     left: 0;
-//     bottom: 0;
-//     height: 100vh;
-//     overflow-y: auto;
-//     z-index: 10;
-//     .logo {
-//       position: sticky;
-//       top: 0;
-//       left: 0;
-//       z-index: 2;
-//     }
-//     &-collapsed + .qt-layout.container {
-//       // 메뉴 접혔을 때  container
-//       padding-left: 8rem;
-//     }
-//   }
-//   &-header {
-//     position: sticky;
-//     top: 0;
-//     left: 0;
-//     z-index: 2;
-//     display: flex;
-//     align-items: center;
-//     justify-content: space-between;
-//     padding-right: 1.5rem;
+#root {
+  .#{$prefix}-layout {
+    width: calc(100% - 20rem);
+    margin-left: 20rem;
+    &.mini {
+      width: calc(100% - 8rem);
+      margin-left: 8rem;
+      .#{$prefix}-layout-header {
+        left: 8rem;
+        width: calc(100% - 8rem);
+      }
+    }
+  }
 
-//     .qt-btn-icon {
-//       > svg {
-//         display: inline-block;
-//         vertical-align: middle;
-//         margin-top: -3px;
-//       }
-//       // background-color: red;
-//       // svg {
-//       //   width: 2.4rem;
-//       //   height: 2.4rem;
-//       // }
-//     }
-//   }
+  .#{$prefix}-layout-sider {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    .sider-header {
+      display: flex;
+      align-items: center;
+      padding: 1rem 1.5rem;
+      position: sticky;
+      top: 0;
+      left: 0;
+      right: 0;
+      //   border-bottom: 1px solid rgba(5, 5, 5, 0.06);
+      //   border-right: 1px solid rgba(5, 5, 5, 0.06);
 
-//   &-content {
-//     padding: 1.5rem;
-//   }
+      .logo {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        img {
+          display: block;
+          width: 2.8rem;
+          transform: translateX(0);
+          transition: 0.2s ease;
+        }
+        span {
+          margin-left: 1rem;
+          display: block;
+          height: 1.9rem;
+          color: $color-light;
+          font-size: 2rem;
+          font-weight: 700;
+          transform: translateX(0);
+          transition: 0.3s ease;
+          &.dark {
+            color: $color-dark;
+          }
+        }
+        &.mini {
+          img {
+            transform: translateX(1rem);
+          }
+          span {
+            transform: translateX(10rem);
+          }
+        }
+      }
+    }
+  }
 
-//   &.container {
-//     min-height: 100vh;
-//     padding-left: 20rem;
-//   }
-// }
+  .#{$prefix}-layout-header {
+    position: fixed;
+    top: 0;
+    left: 20rem;
+    width: calc(100% - 20rem);
+  }
+  .#{$prefix}-layout-content {
+    padding: 1.5rem;
+  }
+}
 
-// .qt-menu-light.qt-menu-root.qt-menu-inline,
-// .qt-menu-light.qt-menu-root.qt-menu-vertical {
-//   border-inline-end: 0;
-// }
-
-// .btn-collapse {
-//   border: 0;
-// }
-
-// .user-info-layer {
-//   padding: 0.5rem 1rem;
-//   display: flex;
-//   align-items: center;
-//   gap: 1.5rem;
-//   // [class*='avatar'] {}
-// }
+.user-info-layer {
+  padding: 0.5rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  // [class*='avatar'] {}
+}

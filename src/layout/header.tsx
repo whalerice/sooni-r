@@ -1,5 +1,4 @@
 import ThemeSwitch from '@/components/theme-switch';
-import Logout from '@/components/logout';
 
 import { Button, Layout, Space } from 'antd';
 import { MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons';
@@ -16,7 +15,7 @@ function HeaderArea() {
   console.log(user);
 
   return (
-    <Header className="header">
+    <Header>
       <Button
         type="text"
         icon={isCollapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
@@ -27,7 +26,6 @@ function HeaderArea() {
         {user?.type !== RoleType.SUPER && <CounselorStatus />}
         <UserInfo />
         <ThemeSwitch />
-        <Logout />
       </Space>
     </Header>
   );

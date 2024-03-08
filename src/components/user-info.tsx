@@ -1,3 +1,5 @@
+import Logout from '@/components/logout';
+
 import type { MenuProps } from 'antd';
 import {
   Avatar,
@@ -93,6 +95,9 @@ export default function UserInfo() {
                 </Text>
                 <Text type="secondary">{user?.team?.name}</Text>
               </Space>
+            </div>
+            <div>
+              <Logout />
             </div>
             <Divider style={{ margin: 0 }} />
             {React.cloneElement(menu as React.ReactElement, {
