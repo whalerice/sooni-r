@@ -12,6 +12,11 @@ import Counselor from '@/pages/counselor';
 import Manager from '@/pages/manager';
 import Member from '@/pages/member';
 import Scenario from '@/pages/scenario';
+import Outbound from '@/pages/outbound';
+import Inbound from '@/pages/inbound';
+import Recording from '@/pages/recording';
+import QuickResponse from '@/pages/quick';
+import SettingGeneral from '@/pages/general';
 
 // declare module 'react-router-dom' {
 //   type RouteObject = RouteObject & MenuListType;
@@ -74,9 +79,34 @@ const routes: RouteObject[] = [
         element: <Message />,
       },
       {
+        path: 'quick',
+        id: 'QuickResponse',
+        element: <QuickResponse />,
+      },
+      {
+        path: 'general',
+        id: 'SettingGeneral',
+        element: <SettingGeneral />,
+      },
+      {
         path: 'scenario',
         id: 'Scenario',
         element: <Scenario />,
+      },
+      {
+        path: 'outbound',
+        id: 'Outbound',
+        element: <Outbound />,
+      },
+      {
+        path: 'inbound',
+        id: 'Inbound',
+        element: <Inbound />,
+      },
+      {
+        path: 'recording',
+        id: 'Recording',
+        element: <Recording />,
       },
     ],
   },

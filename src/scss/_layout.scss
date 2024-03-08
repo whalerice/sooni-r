@@ -55,7 +55,7 @@
         }
         &.mini {
           img {
-            transform: translateX(1rem);
+            transform: translateX(0.8rem);
           }
           span {
             transform: translateX(10rem);
@@ -73,6 +73,21 @@
   }
   .#{$prefix}-layout-content {
     padding: 1.5rem;
+  }
+}
+
+.#{$prefix}-menu-inline-collapsed {
+  > .#{$prefix}-menu-item {
+    padding-inline: calc(8rem / 2 - 1.6rem);
+  }
+  .#{$prefix}-menu-item-group {
+    height: 0;
+    opacity: 0;
+  }
+}
+.#{$prefix}-menu {
+  .#{$prefix}-menu-item-group-title {
+    font-size: 1.2rem;
   }
 }
 
