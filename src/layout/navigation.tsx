@@ -1,5 +1,4 @@
-import { useEffect, useState } from 'react';
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { GetProp, Menu, MenuProps } from 'antd';
 import { useThemeStore } from '@/stores/theme';
 import { routes } from '@/lib/router';
