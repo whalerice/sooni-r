@@ -18,7 +18,7 @@ function LoginForm() {
 
     try {
       const response = await apis.user.login(data);
-      useAuthStore.setState({ user: response });
+      useAuthStore.setState({ user: response, role: response.type });
       navigate('/');
     } catch (error: any) {
       if (error.message) {

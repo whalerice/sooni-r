@@ -3,10 +3,12 @@ import { GetProp, Menu, MenuProps } from 'antd';
 import { useThemeStore } from '@/stores/theme';
 import { routes } from '@/lib/router';
 import { usePreloadStore } from '@/stores/preload';
+import { useAuthStore } from '@/stores/auth';
 
 type MenuItem = GetProp<MenuProps, 'items'>[number];
 
-export function getMenu(menu: any) {
+export function getMenu(menu: RoutesType[]) {
+  const { role } = useAuthStore();
   const items: MenuItem[] = [];
 
   const title = (item: any) => {
@@ -27,25 +29,25 @@ export function getMenu(menu: any) {
     }));
   };
 
-  menu.map((e) => {
-    if (e.children) {
+  menu.map((item) => {
+    if (item.children) {
       items.push({
         type: 'group',
-        label: title(e),
+        label: title(item),
       });
-      e.children.map((j: any) => {
+      item.children.map((c: any) => {
         items.push({
-          key: j.id!,
-          label: title({ parent: e.path, ...j }),
-          icon: j.icon,
-          children: j.children ? child(j.children) : null,
+          key: c.id!,
+          label: title({ parent: item.path, ...c }),
+          icon: c.icon,
+          children: c.children ? child(c.children) : null,
         });
       });
     } else {
       items.push({
-        key: e.id!,
-        label: title(e),
-        icon: e.icon,
+        key: item.id!,
+        label: title(item),
+        icon: item.icon,
       });
     }
   });
@@ -66,7 +68,7 @@ export default function Navigation() {
       defaultSelectedKeys={[currentPage]}
       onClick={onClick}
       mode="inline"
-      items={getMenu(routes[0].children)}
+      items={getMenu(routes[0].children!)}
       theme={themeName}
     />
   );

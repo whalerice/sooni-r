@@ -67,4 +67,14 @@ declare global {
     children?: MenuListType[];
     haveAuthority?: string[];
   };
+
+  type RoutesType = {
+    path: string;
+    id?: string;
+    element?: JSX.Element | undefined;
+    label?: string;
+    icon?: JSX.Element;
+    children?: RoutesType[];
+    haveAuthority?: string[];
+  };
 }

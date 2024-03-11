@@ -38,11 +38,11 @@ import ManagementEnterprise from '@/pages/management/enterprise';
 import SettingChatBot from '@/pages/setting/chat-bot';
 import SettingTicketField from '@/pages/setting/ticket-field';
 
-declare module 'react-router-dom' {
-  type RouteObject = RouteObject & MenuListType;
-}
+// declare module 'react-router-dom' {
+//   type RouteObject = RouteObject & MenuListType;
+// }
 
-export const routes: RouteObject[] = [
+export const routes: RoutesType[] = [
   {
     path: '/',
     element: (
@@ -66,6 +66,7 @@ export const routes: RouteObject[] = [
         element: <Monitor />,
         label: '모니터링',
         icon: <FundViewOutlined />,
+        haveAuthority: ['super', 'admin'],
       },
       {
         path: 'report',
@@ -73,11 +74,13 @@ export const routes: RouteObject[] = [
         element: <Report />,
         label: '리포트',
         icon: <PieChartOutlined />,
+        haveAuthority: ['super', 'admin'],
       },
       {
         path: 'ticket',
         id: 'Ticket',
         label: '티켓',
+        haveAuthority: ['super', 'admin', 'agent'],
         children: [
           {
             path: 'search',
@@ -85,6 +88,7 @@ export const routes: RouteObject[] = [
             element: <TicketSearch />,
             label: '모든티켓조회',
             icon: <TagsOutlined />,
+            haveAuthority: ['super', 'admin'],
           },
         ],
       },
@@ -92,6 +96,7 @@ export const routes: RouteObject[] = [
         path: 'management',
         id: 'Management',
         label: '관리',
+        haveAuthority: ['super', 'admin'],
         children: [
           {
             path: 'enterprise',
@@ -168,6 +173,7 @@ export const routes: RouteObject[] = [
         path: 'voice',
         id: 'Voice',
         label: '음성설정',
+        haveAuthority: ['super', 'admin'],
         children: [
           {
             path: 'scenario',
@@ -203,6 +209,7 @@ export const routes: RouteObject[] = [
         path: 'setting',
         id: 'Setting',
         label: '설정',
+        haveAuthority: ['super', 'admin'],
         children: [
           {
             path: 'general',
