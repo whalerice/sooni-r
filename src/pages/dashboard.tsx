@@ -10,7 +10,7 @@ export default function Dashboard() {
     <>
       dashboard <br />
       {items.map((e) => {
-        return <p>{e}</p>;
+        return <p key={e}>{e}</p>;
       })}
     </>
   );

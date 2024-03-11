@@ -12,7 +12,7 @@ const { Header } = Layout;
 function HeaderArea() {
   const { isCollapsed, setCollapsed } = useThemeStore();
   const { user } = useAuthStore();
-  console.log(user);
+  // console.log(user);
 
   return (
     <Header>

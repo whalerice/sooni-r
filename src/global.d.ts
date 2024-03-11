@@ -63,7 +63,7 @@ declare global {
     label?: string;
     path?: string;
     page?: string;
-    icon?: object;
+    icon?: JSX.Element;
     children?: MenuListType[];
     haveAuthority?: string[];
   };

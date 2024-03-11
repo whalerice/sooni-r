@@ -2,7 +2,7 @@ import Navigation from '@/layout/navigation';
 
 import clsx from 'clsx';
 import { NavLink } from 'react-router-dom';
-import { Button, Layout, Space, theme } from 'antd';
+import { Layout, theme } from 'antd';
 
 import { useThemeStore } from '@/stores/theme';
 import HeaderArea from './header';
@@ -16,7 +16,6 @@ export default function MainLayout({
 }) {
   const { themeName, isCollapsed } = useThemeStore();
   const { token } = theme.useToken();
-  console.log(token);
 
   return (
     <>
