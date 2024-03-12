@@ -75,6 +75,6 @@ declare global {
     label?: string;
     icon?: JSX.Element;
     children?: RoutesType[];
-    haveAuthority?: string[];
+    haveAuthority?: RoleType[];
   };
 }

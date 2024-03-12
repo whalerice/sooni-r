@@ -1,5 +1,3 @@
-import Logout from '@/components/logout';
-
 import type { MenuProps } from 'antd';
 import {
   Avatar,
@@ -11,18 +9,17 @@ import {
   Typography,
   theme,
 } from 'antd';
-import { UserOutlined, LockOutlined } from '@ant-design/icons';
+import { UserOutlined, LockOutlined, LogoutOutlined } from '@ant-design/icons';
 import { useState } from 'react';
 import React from 'react';
 import { useAuthStore } from '@/stores/auth';
 import { AgentStatus, RoleType } from '@/lib/enums';
 
 const { Text } = Typography;
-
 const { useToken } = theme;
 
 export default function UserInfo() {
-  const { user } = useAuthStore();
+  const { user, onLogout } = useAuthStore();
   const { token } = useToken();
   const [open, setOpen] = useState(false);
   const [info, setInfo] = useState({ title: '' });
@@ -43,6 +40,17 @@ export default function UserInfo() {
         </a>
       ),
       key: 'pass',
+    },
+    {
+      type: 'divider',
+    },
+    {
+      label: (
+        <a onClick={() => onLogout(user?.id)}>
+          <LogoutOutlined /> 로그아웃
+        </a>
+      ),
+      key: 'logout',
     },
   ];
 
@@ -96,9 +104,6 @@ export default function UserInfo() {
                 <Text type="secondary">{user?.team?.name}</Text>
               </Space>
             </div>
-            <div>
-              <Logout />
-            </div>
             <Divider style={{ margin: 0 }} />
             {React.cloneElement(menu as React.ReactElement, {
               style: menuStyle,
@@ -123,6 +128,7 @@ export default function UserInfo() {
             </Text>
           </Space>
         </Button>
+        {/* <Button icon={<LogoutOutlined />}>dd</Button> */}
       </Dropdown>
 
       <Drawer title={info.title} onClose={onClose} open={open}></Drawer>

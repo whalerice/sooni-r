@@ -17,7 +17,7 @@ import {
   ThunderboltOutlined,
 } from '@ant-design/icons';
 
-import { Outlet, RouteObject } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 import RootLayout from '@/layout/root-layout';
 import Login from '@/pages/login';
 import MainLayout from '@/layout/main-layout';
@@ -37,6 +37,8 @@ import SettingAutomation from '@/pages/setting/automation';
 import ManagementEnterprise from '@/pages/management/enterprise';
 import SettingChatBot from '@/pages/setting/chat-bot';
 import SettingTicketField from '@/pages/setting/ticket-field';
+import TicketOwn from '@/pages/ticket/own';
+import { RoleType } from '@/lib/enums';
 
 // declare module 'react-router-dom' {
 //   type RouteObject = RouteObject & MenuListType;
@@ -59,6 +61,7 @@ export const routes: RoutesType[] = [
         element: <Dashboard />,
         label: '대쉬보드',
         icon: <DashboardOutlined />,
+        haveAuthority: [RoleType.SUPER, RoleType.ADMIN, RoleType.AGENT],
       },
       {
         path: 'monitor',
@@ -66,7 +69,7 @@ export const routes: RoutesType[] = [
         element: <Monitor />,
         label: '모니터링',
         icon: <FundViewOutlined />,
-        haveAuthority: ['super', 'admin'],
+        haveAuthority: [RoleType.SUPER],
       },
       {
         path: 'report',
@@ -74,13 +77,13 @@ export const routes: RoutesType[] = [
         element: <Report />,
         label: '리포트',
         icon: <PieChartOutlined />,
-        haveAuthority: ['super', 'admin'],
+        haveAuthority: [RoleType.SUPER],
       },
       {
         path: 'ticket',
         id: 'Ticket',
         label: '티켓',
-        haveAuthority: ['super', 'admin', 'agent'],
+        haveAuthority: [RoleType.SUPER, RoleType.ADMIN, RoleType.AGENT],
         children: [
           {
             path: 'search',
@@ -88,7 +91,15 @@ export const routes: RoutesType[] = [
             element: <TicketSearch />,
             label: '모든티켓조회',
             icon: <TagsOutlined />,
-            haveAuthority: ['super', 'admin'],
+            haveAuthority: [RoleType.SUPER, RoleType.ADMIN],
+          },
+          {
+            path: 'own',
+            id: 'TicketOwn',
+            element: <TicketOwn />,
+            label: '나의티켓',
+            icon: <TagsOutlined />,
+            haveAuthority: [RoleType.AGENT],
           },
         ],
       },
@@ -96,7 +107,7 @@ export const routes: RoutesType[] = [
         path: 'management',
         id: 'Management',
         label: '관리',
-        haveAuthority: ['super', 'admin'],
+        haveAuthority: [RoleType.SUPER, RoleType.ADMIN, RoleType.AGENT],
         children: [
           {
             path: 'enterprise',
@@ -104,6 +115,7 @@ export const routes: RoutesType[] = [
             element: <ManagementEnterprise />,
             label: '회사관리',
             icon: <PartitionOutlined />,
+            haveAuthority: [RoleType.SUPER],
           },
           {
             path: 'team',
@@ -111,6 +123,7 @@ export const routes: RoutesType[] = [
             element: <ManagementTeam />,
             label: '팀',
             icon: <TeamOutlined />,
+            haveAuthority: [RoleType.SUPER, RoleType.ADMIN],
           },
           {
             path: 'member',
@@ -118,6 +131,7 @@ export const routes: RoutesType[] = [
             element: <ManagementMember />,
             label: '팀원관리',
             icon: <SolutionOutlined />,
+            haveAuthority: [RoleType.SUPER, RoleType.ADMIN],
           },
           {
             path: 'manager',
@@ -125,6 +139,7 @@ export const routes: RoutesType[] = [
             element: <ManagementManager />,
             label: '관리자',
             icon: <IdcardOutlined />,
+            haveAuthority: [RoleType.SUPER, RoleType.ADMIN],
           },
           {
             path: 'counselor',
@@ -132,6 +147,7 @@ export const routes: RoutesType[] = [
             element: <ManagementCounselor />,
             label: '상담사',
             icon: <CustomerServiceOutlined />,
+            haveAuthority: [RoleType.SUPER, RoleType.ADMIN],
           },
           {
             path: 'message',
@@ -139,6 +155,7 @@ export const routes: RoutesType[] = [
             element: <ManagementMessage />,
             label: '챗봇메세지',
             icon: <CommentOutlined />,
+            haveAuthority: [RoleType.SUPER, RoleType.ADMIN],
           },
           {
             path: 'quick',
@@ -146,6 +163,7 @@ export const routes: RoutesType[] = [
             element: <ManagementQuick />,
             label: '빠른답변',
             icon: <ThunderboltOutlined />,
+            haveAuthority: [RoleType.SUPER, RoleType.ADMIN, RoleType.AGENT],
           },
           // {
           //   path: 'set',
@@ -173,7 +191,7 @@ export const routes: RoutesType[] = [
         path: 'voice',
         id: 'Voice',
         label: '음성설정',
-        haveAuthority: ['super', 'admin'],
+        haveAuthority: [RoleType.SUPER, RoleType.ADMIN, RoleType.AGENT],
         children: [
           {
             path: 'scenario',
@@ -181,6 +199,7 @@ export const routes: RoutesType[] = [
             element: <VoiceScenario />,
             label: '시나리오',
             icon: <ApartmentOutlined />,
+            haveAuthority: [RoleType.SUPER, RoleType.ADMIN],
           },
           // {
           //   path: 'outbound',
@@ -209,7 +228,7 @@ export const routes: RoutesType[] = [
         path: 'setting',
         id: 'Setting',
         label: '설정',
-        haveAuthority: ['super', 'admin'],
+        haveAuthority: [RoleType.SUPER],
         children: [
           {
             path: 'general',
@@ -217,6 +236,7 @@ export const routes: RoutesType[] = [
             element: <SettingGeneral />,
             label: '일반설정',
             icon: <SettingOutlined />,
+            haveAuthority: [RoleType.SUPER],
           },
           {
             path: 'automation',
@@ -224,6 +244,7 @@ export const routes: RoutesType[] = [
             element: <SettingAutomation />,
             label: '자동화',
             icon: <PartitionOutlined />,
+            haveAuthority: [RoleType.SUPER],
           },
           {
             path: 'chatbot',
@@ -231,6 +252,7 @@ export const routes: RoutesType[] = [
             element: <SettingChatBot />,
             label: '챗봇설정',
             icon: <PartitionOutlined />,
+            haveAuthority: [RoleType.SUPER],
           },
           {
             path: 'ticketfield',
@@ -238,6 +260,7 @@ export const routes: RoutesType[] = [
             element: <SettingTicketField />,
             label: '티켓필드',
             icon: <PartitionOutlined />,
+            haveAuthority: [RoleType.SUPER],
           },
         ],
       },

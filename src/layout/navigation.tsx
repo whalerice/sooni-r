@@ -11,6 +11,8 @@ export function getMenu(menu: RoutesType[]) {
   const { role } = useAuthStore();
   const items: MenuItem[] = [];
 
+  console.log(role);
+
   const title = (item: any) => {
     const path = item.parent ? `/${item.parent}/${item.path}` : `/${item.path}`;
 
@@ -19,6 +21,11 @@ export function getMenu(menu: RoutesType[]) {
     }
 
     return item.label;
+  };
+
+  const isAuthority = (authority: any[]) => {
+    const state = authority.filter((e) => e === role).length > 0;
+    return state;
   };
 
   const child = (items: any) => {
@@ -30,25 +37,29 @@ export function getMenu(menu: RoutesType[]) {
   };
 
   menu.map((item) => {
-    if (item.children) {
-      items.push({
-        type: 'group',
-        label: title(item),
-      });
-      item.children.map((c: any) => {
+    if (isAuthority(item.haveAuthority!)) {
+      if (item.children) {
         items.push({
-          key: c.id!,
-          label: title({ parent: item.path, ...c }),
-          icon: c.icon,
-          children: c.children ? child(c.children) : null,
+          type: 'group',
+          label: title(item),
         });
-      });
-    } else {
-      items.push({
-        key: item.id!,
-        label: title(item),
-        icon: item.icon,
-      });
+        item.children.map((c: any) => {
+          if (isAuthority(c.haveAuthority)) {
+            items.push({
+              key: c.id!,
+              label: title({ parent: item.path, ...c }),
+              icon: c.icon,
+              children: c.children ? child(c.children) : null,
+            });
+          }
+        });
+      } else {
+        items.push({
+          key: item.id!,
+          label: title(item),
+          icon: item.icon,
+        });
+      }
     }
   });
 
