@@ -1,17 +1,16 @@
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import { GetProp, Menu, MenuProps } from 'antd';
 import { useThemeStore } from '@/stores/theme';
 import { routes } from '@/lib/router';
 import { usePreloadStore } from '@/stores/preload';
 import { useAuthStore } from '@/stores/auth';
+import { useEffect } from 'react';
 
 type MenuItem = GetProp<MenuProps, 'items'>[number];
 
 export function getMenu(menu: RoutesType[]) {
   const { role } = useAuthStore();
   const items: MenuItem[] = [];
-
-  console.log(role);
 
   const title = (item: any) => {
     const path = item.parent ? `/${item.parent}/${item.path}` : `/${item.path}`;
@@ -67,12 +66,43 @@ export function getMenu(menu: RoutesType[]) {
 }
 
 export default function Navigation() {
+  const { pathname } = useLocation();
   const { themeName } = useThemeStore();
   const { currentPage, setPage } = usePreloadStore();
 
   const onClick: MenuProps['onClick'] = (e) => {
+    console.log(e);
+
     setPage(e.key);
   };
+
+  const 첫글자대문자 = (str: string) => {
+    console.log(str);
+    if (str === undefined) {
+      return '';
+    }
+
+    const text = str[0].toUpperCase() + str.slice(1, str.length);
+    return text;
+  };
+
+  useEffect(() => {
+    if (pathname !== '/') {
+      const c = pathname.split('/');
+
+      const a = 첫글자대문자(c[1]);
+      const b = 첫글자대문자(c[2]);
+      const d = a + b;
+
+      if (d !== currentPage) {
+        setPage(d);
+      }
+    } else {
+      setPage('Dashboard');
+    }
+
+    console.log(currentPage);
+  }, [pathname, currentPage]);
 
   return (
     <Menu
