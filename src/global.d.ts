@@ -1,4 +1,5 @@
 import { MappingAlgorithm } from 'antd';
+import type { GetProp, TableProps } from 'antd';
 
 export {};
 
@@ -58,16 +59,6 @@ declare global {
     type: string;
   };
 
-  type MenuListType = {
-    type?: string;
-    label?: string;
-    path?: string;
-    page?: string;
-    icon?: JSX.Element;
-    children?: MenuListType[];
-    haveAuthority?: string[];
-  };
-
   type RoutesType = {
     path: string;
     id?: string;
@@ -77,4 +68,24 @@ declare global {
     children?: RoutesType[];
     haveAuthority?: RoleType[];
   };
+
+  type ColumnsType<T> = TableProps<T>['columns'];
+
+  // type Direction = 'DESC' | 'ASC';
+
+  // type PagingOption = {
+  //   page: number;
+  //   rowsPerPage: number;
+  //   sort: {
+  //     id: string;
+  //     direction: Direction;
+  //   };
+  // };
+
+  interface TableParams {
+    pagination: Exclude<GetProp<TableProps, 'pagination'>, boolean>;
+    sortField: string;
+    sortOrder: string;
+    filters?: Parameters<GetProp<TableProps, 'onChange'>>[1];
+  }
 }

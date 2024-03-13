@@ -1,4 +1,5 @@
 import { QueryCache, QueryClient } from '@tanstack/react-query';
+import { notification } from 'antd';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -8,7 +9,11 @@ const queryClient = new QueryClient({
   },
   queryCache: new QueryCache({
     onError: (error) => {
-      console.error(error);
+      notification.error({
+        message: '에러',
+        description: error.message,
+        placement: 'bottomRight',
+      });
     },
     // onSuccess: (data) => {
     //   //   console.log(data);

@@ -32,11 +32,11 @@ function RootLayout({ children }: { children: React.ReactNode }) {
       document.body.classList.remove('dark');
     }
 
-    if (user && pathname === '/login') {
-      navigate('/');
-    } else if (!user && pathname !== '/login') {
-      navigate('/login');
-    }
+    // if (user && pathname === '/login') {
+    //   navigate('/');
+    // } else if (!user && pathname !== '/login') {
+    //   navigate('/login');
+    // }
   }, [user, isDarkMode]);
 
   return (

@@ -68,4 +68,8 @@ export const apis = {
     logout: (data: Logout) => request.post('/api/user/logout', data),
     sessionTouch: () => request.get('/api/user/session-touch'),
   },
+
+  team: {
+    list: (data: any) => request.post('/api/team/list', { pagingOption: data }),
+  },
 };

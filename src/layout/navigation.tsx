@@ -77,7 +77,7 @@ export default function Navigation() {
   };
 
   const 첫글자대문자 = (str: string) => {
-    console.log(str);
+    // console.log(str);
     if (str === undefined) {
       return '';
     }
@@ -101,7 +101,7 @@ export default function Navigation() {
       setPage('Dashboard');
     }
 
-    console.log(currentPage);
+    // console.log(currentPage);
   }, [pathname, currentPage]);
 
   return (

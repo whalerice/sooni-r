@@ -40,10 +40,6 @@ import SettingTicketField from '@/pages/setting/ticket-field';
 import TicketOwn from '@/pages/ticket/own';
 import { RoleType } from '@/lib/enums';
 
-// declare module 'react-router-dom' {
-//   type RouteObject = RouteObject & MenuListType;
-// }
-
 export const routes: RoutesType[] = [
   {
     path: '/',
