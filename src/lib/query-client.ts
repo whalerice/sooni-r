@@ -8,10 +8,10 @@ const queryClient = new QueryClient({
     },
   },
   queryCache: new QueryCache({
-    onError: (error) => {
+    onError: (error: any) => {
       notification.error({
-        message: '에러',
-        description: error.message,
+        message: `에러 ${error.status}`,
+        description: error.data.message,
         placement: 'bottomRight',
       });
     },

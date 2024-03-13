@@ -43,8 +43,9 @@ const send = async (options: SendParams) => {
     return response.data;
   } catch (error: any) {
     if (error.response.data) {
-      throw error.response.data;
+      throw { ...error.response };
     }
+
     throw error;
   }
 };
