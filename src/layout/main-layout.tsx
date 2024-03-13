@@ -6,6 +6,7 @@ import { Layout, theme } from 'antd';
 
 import { useThemeStore } from '@/stores/theme';
 import HeaderArea from './header';
+import PageHeader from './page-header';
 
 const { Content, Sider } = Layout;
 
@@ -44,7 +45,7 @@ export default function MainLayout({
       >
         <HeaderArea />
         <Content>
-          {/* <div className="page-title">{menuInfo[pathname].pageTitle}</div> */}
+          <PageHeader />
           {children}
         </Content>
       </Layout>

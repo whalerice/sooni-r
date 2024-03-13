@@ -5,6 +5,7 @@ import { routes } from '@/lib/router';
 import { usePreloadStore } from '@/stores/preload';
 import { useAuthStore } from '@/stores/auth';
 import { useEffect } from 'react';
+import { getCurrentPath } from '@/lib/utils';
 
 type MenuItem = GetProp<MenuProps, 'items'>[number];
 
@@ -71,37 +72,12 @@ export default function Navigation() {
   const { currentPage, setPage } = usePreloadStore();
 
   const onClick: MenuProps['onClick'] = (e) => {
-    console.log(e);
-
+    // console.log(e);
     setPage(e.key);
   };
 
-  const 첫글자대문자 = (str: string) => {
-    // console.log(str);
-    if (str === undefined) {
-      return '';
-    }
-
-    const text = str[0].toUpperCase() + str.slice(1, str.length);
-    return text;
-  };
-
   useEffect(() => {
-    if (pathname !== '/') {
-      const c = pathname.split('/');
-
-      const a = 첫글자대문자(c[1]);
-      const b = 첫글자대문자(c[2]);
-      const d = a + b;
-
-      if (d !== currentPage) {
-        setPage(d);
-      }
-    } else {
-      setPage('Dashboard');
-    }
-
-    // console.log(currentPage);
+    setPage(getCurrentPath(pathname));
   }, [pathname, currentPage]);
 
   return (

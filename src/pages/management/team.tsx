@@ -1,9 +1,10 @@
 import { apis } from '@/lib/apis';
 import { useQuery } from '@tanstack/react-query';
-import { Card, Table, Typography } from 'antd';
+import { Card, Col, Pagination, Row, Space, Table, Typography } from 'antd';
 import { useState } from 'react';
 import type { TableProps } from 'antd';
 import dayjs from 'dayjs';
+import { getDirection, getParams } from '@/lib/utils';
 
 const { Link } = Typography;
 
@@ -43,10 +44,6 @@ const columns: ColumnsType<DataType> = [
   },
 ];
 
-const getDirection = (type: any) => {
-  return type === 'descend' ? 'DESC' : type === 'ascend' ? 'ASC' : 'DESC';
-};
-
 const ManagementTeam = () => {
   const [tableParams, setTableParams] = useState<TableParams>({
     pagination: {
@@ -55,15 +52,6 @@ const ManagementTeam = () => {
     },
     sortField: 'id',
     sortOrder: getDirection('descend'),
-  });
-
-  const getParams = (params: TableParams) => ({
-    page: params.pagination.current,
-    rowsPerPage: params.pagination.pageSize,
-    sort: {
-      id: params.sortField,
-      direction: params.sortOrder,
-    },
   });
 
   const { data, isLoading } = useQuery({
@@ -92,19 +80,48 @@ const ManagementTeam = () => {
     });
   };
 
+  const onRowClick = (record) => {
+    console.log(record);
+  };
+
+  const onChange = (num: number) => {
+    setTableParams({
+      ...tableParams,
+      pagination: {
+        ...tableParams.pagination,
+        current: num,
+      },
+    });
+  };
+
   return (
     <>
       <Card>search</Card>
       <br />
-      <div>총 {tableParams.pagination?.total} 건</div>
+
       <Table
         columns={columns}
         rowKey={(record) => record.id}
         dataSource={data}
         loading={isLoading}
-        pagination={tableParams.pagination}
+        pagination={false}
         onChange={handleTableChange}
+        scroll={{ x: 800 }}
+        onRow={(record, rowIndex) => {
+          return {
+            onClick: () => onRowClick(record),
+          };
+        }}
       />
+      <Row align="middle" justify="space-between">
+        <Col>총 {tableParams.pagination?.total} 건</Col>
+        <Col>
+          <Pagination
+            onChange={onChange}
+            total={tableParams.pagination?.total}
+          />
+        </Col>
+      </Row>
     </>
   );
 };

@@ -16,6 +16,10 @@ body {
   }
 }
 
+.page-header {
+  background-color: $body-bg-light;
+}
+
 .#{$prefix}-menu-light {
   &.#{$prefix}-menu-root.#{$prefix}-menu-inline {
     border-inline-end: 0;
@@ -34,5 +38,9 @@ body {
         background-color: $bg-dark;
       }
     }
+  }
+
+  .page-header {
+    background-color: $body-bg-dark;
   }
 }
