@@ -1,7 +1,7 @@
+import { useState } from 'react';
 import { apis } from '@/lib/apis';
 import { useQuery } from '@tanstack/react-query';
 import {
-  Breadcrumb,
   Button,
   Col,
   Flex,
@@ -9,17 +9,18 @@ import {
   Pagination,
   Row,
   Select,
+  Space,
   Table,
   Tag,
   Tooltip,
   Typography,
 } from 'antd';
-import { useState } from 'react';
+import { RedoOutlined } from '@ant-design/icons';
 import type { TableProps } from 'antd';
 import dayjs from 'dayjs';
 import { getDirection, getParams } from '@/lib/utils';
 
-const { Title, Text } = Typography;
+const { Text } = Typography;
 const { Search } = Input;
 
 interface DataType {
@@ -138,27 +139,37 @@ const ManagementEnterprise = () => {
 
   return (
     <>
-      <Flex wrap="wrap" gap={5} className="data-table-search">
-        <Select
-          placeholder="서비스 사용 여부"
-          onChange={handleSelectChange}
-          options={[
-            { value: true, label: '활성' },
-            { value: false, label: '비활성' },
-          ]}
-        />
-        <div>
+      <Flex
+        wrap="wrap"
+        gap={5}
+        justify="space-between"
+        className="data-table-search"
+      >
+        <Space>
+          <Select
+            placeholder="서비스 사용 여부"
+            onChange={handleSelectChange}
+            options={[
+              { value: true, label: '활성' },
+              { value: false, label: '비활성' },
+            ]}
+          />
           <Search placeholder="텍스트 검색" enterButton onSearch={onSearch} />
-        </div>
+        </Space>
 
         <Tooltip title="검색 초기화">
-          <Button>초기화</Button>
+          <Button icon={<RedoOutlined />}></Button>
         </Tooltip>
       </Flex>
-      <div className="data-table-header">
-        <Title level={5}>회사목록</Title>
+      <Flex
+        gap={5}
+        justify="space-between"
+        align="center"
+        className="data-table-header"
+      >
+        <Text strong>회사목록</Text>
         <Button>다운로드</Button>
-      </div>
+      </Flex>
       <Table
         showSorterTooltip={false}
         columns={columns}
@@ -175,7 +186,7 @@ const ManagementEnterprise = () => {
           };
         }}
       />
-      <Row align="middle" justify="space-between" style={{ marginTop: '1rem' }}>
+      <Row align="middle" justify="space-between">
         <Col></Col>
         <Col>
           <Pagination

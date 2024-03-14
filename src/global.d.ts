@@ -4,6 +4,8 @@ import type { GetProp, TableProps } from 'antd';
 export {};
 
 declare global {
+  type CustomIconComponentProps = GetProps<typeof Icon>;
+
   type ThemeAntModeType = {
     [key: string]: MappingAlgorithm;
   };

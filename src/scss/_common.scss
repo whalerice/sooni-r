@@ -1,0 +1,16 @@
+.user-info-layer {
+  padding: 0.5rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  // [class*='avatar'] {}
+}
+
+.page-header {
+  position: sticky;
+  top: 5rem;
+  left: 0;
+  width: calc(100% + 3rem);
+  padding: 1rem 1.5rem;
+  transform: translate(-1.5rem, 0);
+}
