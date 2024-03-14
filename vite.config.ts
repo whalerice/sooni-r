@@ -1,7 +1,8 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react-swc';
 
-const appUrl = 'http://192.168.0.164:8080';
+// const appUrl = 'http://192.168.0.164:8080';
+const appUrl = 'https://server-nest-khaki.vercel.app';
 const chatUrl = 'http://192.168.0.164:9090';
 
 // https://vitejs.dev/config/
