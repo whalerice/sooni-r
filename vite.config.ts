@@ -2,7 +2,7 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react-swc';
 
 // const appUrl = 'http://192.168.0.164:8080';
-const appUrl = 'http://server-nest-khaki.vercel.app';
+const appUrl = 'https://server-nest-khaki.vercel.app';
 // const appUrl = 'http://localhost:3300';
 const chatUrl = 'http://192.168.0.164:9090';
 

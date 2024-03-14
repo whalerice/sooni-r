@@ -3,7 +3,7 @@
     { "source": "/(.*)", "destination": "/" },
     {
       "source": "/api/(.*)",
-      "destination": "http://server-nest-khaki.vercel.app/"
+      "destination": "https://server-nest-khaki.vercel.app"
     }
   ]
 }
