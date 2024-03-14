@@ -1,12 +1,24 @@
 import { apis } from '@/lib/apis';
 import { useQuery } from '@tanstack/react-query';
-import { Card, Col, Pagination, Row, Space, Table, Typography } from 'antd';
+import {
+  Button,
+  Card,
+  Col,
+  Flex,
+  Pagination,
+  Row,
+  Space,
+  Table,
+  Tooltip,
+  Typography,
+} from 'antd';
 import { useState } from 'react';
 import type { TableProps } from 'antd';
 import dayjs from 'dayjs';
 import { getDirection, getParams } from '@/lib/utils';
+import { FileMarkdownOutlined } from '@ant-design/icons';
 
-const { Link } = Typography;
+const { Link, Text } = Typography;
 
 interface DataType {
   createdAt: string;
@@ -25,7 +37,7 @@ const columns: ColumnsType<DataType> = [
   {
     title: '팀명',
     dataIndex: 'name',
-    render: (text: string) => <Link>{text}</Link>,
+    // render: (text: string) => <Link>{text}</Link>,
     sorter: true,
   },
   {
@@ -45,6 +57,7 @@ const columns: ColumnsType<DataType> = [
 ];
 
 const ManagementTeam = () => {
+  const [total, setTotal] = useState<number>(0);
   const [tableParams, setTableParams] = useState<TableParams>({
     pagination: {
       current: 1,
@@ -62,7 +75,7 @@ const ManagementTeam = () => {
         ...tableParams,
         pagination: { ...tableParams.pagination, total: res.count },
       });
-
+      setTotal(res.count);
       return res.items;
     },
   });
@@ -80,7 +93,7 @@ const ManagementTeam = () => {
     });
   };
 
-  const onRowClick = (record) => {
+  const onRowClick = (record: DataType) => {
     console.log(record);
   };
 
@@ -96,32 +109,62 @@ const ManagementTeam = () => {
 
   return (
     <>
-      <Card>search</Card>
-      <br />
-
-      <Table
-        columns={columns}
-        rowKey={(record) => record.id}
-        dataSource={data}
-        loading={isLoading}
-        pagination={false}
-        onChange={handleTableChange}
-        scroll={{ x: 800 }}
-        onRow={(record, rowIndex) => {
-          return {
-            onClick: () => onRowClick(record),
-          };
-        }}
-      />
-      <Row align="middle" justify="space-between">
-        <Col>총 {tableParams.pagination?.total} 건</Col>
-        <Col>
-          <Pagination
-            onChange={onChange}
-            total={tableParams.pagination?.total}
-          />
-        </Col>
-      </Row>
+      <Flex vertical gap={10}>
+        <Flex
+          gap={5}
+          justify="space-between"
+          align="center"
+          className="data-table-header"
+        >
+          <div>
+            <Text strong>팀 목록</Text>
+            <span
+              style={{
+                fontSize: '1.2rem',
+                marginLeft: '0.5rem',
+                color: 'grey',
+              }}
+            >
+              총 {total} 건
+            </span>
+          </div>
+          <Tooltip title="엑셀 다운로드">
+            <Button
+              type="text"
+              icon={<FileMarkdownOutlined />}
+              style={{ color: 'green' }}
+            ></Button>
+          </Tooltip>
+        </Flex>
+        <Table
+          showSorterTooltip={false}
+          columns={columns}
+          rowKey={(record) => record.id}
+          dataSource={data}
+          loading={isLoading}
+          pagination={false}
+          onChange={handleTableChange}
+          scroll={{ x: 800 }}
+          sortDirections={['descend', 'ascend']}
+          onRow={(record) => {
+            return {
+              onClick: () => onRowClick(record),
+            };
+          }}
+        />
+        <Row align="middle" justify="space-between">
+          <Col></Col>
+          <Col>
+            <Pagination
+              onChange={onChange}
+              // showTotal={(total) => `Total ${total} items`}
+              defaultCurrent={tableParams.pagination.current}
+              defaultPageSize={tableParams.pagination.pageSize}
+              total={tableParams.pagination?.total}
+            />
+          </Col>
+        </Row>
+      </Flex>
     </>
   );
 };

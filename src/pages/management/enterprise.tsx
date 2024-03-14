@@ -15,7 +15,7 @@ import {
   Tooltip,
   Typography,
 } from 'antd';
-import { RedoOutlined } from '@ant-design/icons';
+import { RedoOutlined, FileMarkdownOutlined } from '@ant-design/icons';
 import type { TableProps } from 'antd';
 import dayjs from 'dayjs';
 import { getDirection, getParams } from '@/lib/utils';
@@ -82,6 +82,7 @@ const columns: ColumnsType<DataType> = [
 ];
 
 const ManagementEnterprise = () => {
+  const [total, setTotal] = useState<number>(0);
   const [tableParams, setTableParams] = useState<TableParams>({
     pagination: {
       current: 1,
@@ -101,7 +102,7 @@ const ManagementEnterprise = () => {
         ...tableParams,
         pagination: { ...tableParams.pagination, total: res.count },
       });
-
+      setTotal(res.count);
       return res.items;
     },
   });
@@ -161,43 +162,63 @@ const ManagementEnterprise = () => {
           <Button icon={<RedoOutlined />}></Button>
         </Tooltip>
       </Flex>
-      <Flex
-        gap={5}
-        justify="space-between"
-        align="center"
-        className="data-table-header"
-      >
-        <Text strong>회사목록</Text>
-        <Button>다운로드</Button>
+
+      <Flex vertical gap={10}>
+        <Flex
+          gap={5}
+          justify="space-between"
+          align="center"
+          className="data-table-header"
+        >
+          <div>
+            <Text strong>회사목록</Text>
+            <span
+              style={{
+                fontSize: '1.2rem',
+                marginLeft: '0.5rem',
+                color: 'grey',
+              }}
+            >
+              총 {total} 건
+            </span>
+          </div>
+          <Tooltip title="엑셀 다운로드">
+            <Button
+              type="text"
+              icon={<FileMarkdownOutlined />}
+              style={{ color: 'green' }}
+            ></Button>
+          </Tooltip>
+        </Flex>
+        <Table
+          showSorterTooltip={false}
+          columns={columns}
+          rowKey={(record) => record.id}
+          dataSource={data}
+          loading={isLoading}
+          pagination={false}
+          onChange={handleTableChange}
+          scroll={{ x: 800 }}
+          sortDirections={['descend', 'ascend']}
+          onRow={(record) => {
+            return {
+              onClick: () => onRowClick(record),
+            };
+          }}
+        />
+        <Row align="middle" justify="space-between">
+          <Col></Col>
+          <Col>
+            <Pagination
+              onChange={onChange}
+              // showTotal={(total) => `Total ${total} items`}
+              defaultCurrent={tableParams.pagination.current}
+              defaultPageSize={tableParams.pagination.pageSize}
+              total={tableParams.pagination?.total}
+            />
+          </Col>
+        </Row>
       </Flex>
-      <Table
-        showSorterTooltip={false}
-        columns={columns}
-        rowKey={(record) => record.id}
-        dataSource={data}
-        loading={isLoading}
-        pagination={false}
-        onChange={handleTableChange}
-        scroll={{ x: 800 }}
-        sortDirections={['descend', 'ascend']}
-        onRow={(record) => {
-          return {
-            onClick: () => onRowClick(record),
-          };
-        }}
-      />
-      <Row align="middle" justify="space-between">
-        <Col></Col>
-        <Col>
-          <Pagination
-            onChange={onChange}
-            showTotal={(total) => `Total ${total} items`}
-            defaultCurrent={tableParams.pagination.current}
-            defaultPageSize={tableParams.pagination.pageSize}
-            total={tableParams.pagination?.total}
-          />
-        </Col>
-      </Row>
     </>
   );
 };

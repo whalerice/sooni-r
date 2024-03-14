@@ -1,4 +1,5 @@
 import { Breadcrumb, Button, Flex } from 'antd';
+import { PlusOutlined } from '@ant-design/icons';
 import { useLocation } from 'react-router-dom';
 
 import { routes } from '@/lib/router';
@@ -23,7 +24,16 @@ const PageHeader = () => {
       className="page-header"
     >
       <Breadcrumb items={breadcrumbItem} />
-      {current === 'ManagementEnterprise' && <Button>등록하기</Button>}
+      {current === 'ManagementEnterprise' && (
+        <Button type="primary" ghost icon={<PlusOutlined />}>
+          등록하기
+        </Button>
+      )}
+      {current === 'ManagementTeam' && (
+        <Button type="primary" ghost icon={<PlusOutlined />}>
+          팀 추가
+        </Button>
+      )}
     </Flex>
   );
 };
