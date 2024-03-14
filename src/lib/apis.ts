@@ -31,6 +31,7 @@ const send = async (options: SendParams) => {
       params: params,
       headers: {
         Accept: 'application/json',
+        'Access-Control-Allow-Origin': '*',
         ...(isForm
           ? { 'Content-Type': 'multipart/form-data' }
           : { 'Content-Type': 'application/json' }),
