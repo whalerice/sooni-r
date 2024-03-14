@@ -2,23 +2,21 @@ import { apis } from '@/lib/apis';
 import { useQuery } from '@tanstack/react-query';
 import {
   Button,
-  Card,
   Col,
   Flex,
   Pagination,
   Row,
-  Space,
   Table,
   Tooltip,
   Typography,
 } from 'antd';
 import { useState } from 'react';
-import type { TableProps } from 'antd';
+// import type { TableProps } from 'antd';
 import dayjs from 'dayjs';
 import { getDirection, getParams } from '@/lib/utils';
 import { FileMarkdownOutlined } from '@ant-design/icons';
 
-const { Link, Text } = Typography;
+const { Text } = Typography;
 
 interface DataType {
   createdAt: string;
@@ -80,10 +78,10 @@ const ManagementTeam = () => {
     },
   });
 
-  const handleTableChange: TableProps['onChange'] = (
-    pagination,
-    filters,
-    sorter,
+  const handleTableChange: any = (
+    pagination: any,
+    filters: any,
+    sorter: any,
   ) => {
     setTableParams({
       pagination,

@@ -11,9 +11,9 @@ import {
   PartitionOutlined,
   TagsOutlined,
   SettingOutlined,
-  MergeCellsOutlined,
-  SplitCellsOutlined,
-  AimOutlined,
+  // MergeCellsOutlined,
+  // SplitCellsOutlined,
+  // AimOutlined,
   ThunderboltOutlined,
 } from '@ant-design/icons';
 

@@ -13,7 +13,7 @@ type State = {
 
 export const useAuthStore = create(
   persist<State>(
-    (set, get) => ({
+    (set) => ({
       user: null,
       role: '',
       onLogout: async (id) => {

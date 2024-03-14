@@ -13,7 +13,7 @@ import { UserOutlined, LockOutlined, LogoutOutlined } from '@ant-design/icons';
 import { useState } from 'react';
 import React from 'react';
 import { useAuthStore } from '@/stores/auth';
-import { AgentStatus, RoleType } from '@/lib/enums';
+import { RoleType } from '@/lib/enums';
 
 const { Text } = Typography;
 const { useToken } = theme;

@@ -17,7 +17,7 @@ import {
   Typography,
 } from 'antd';
 import { RedoOutlined, FileMarkdownOutlined } from '@ant-design/icons';
-import type { TableProps } from 'antd';
+// import type { TableProps } from 'antd';
 import dayjs from 'dayjs';
 import { getDirection, getParams } from '@/lib/utils';
 
@@ -107,8 +107,8 @@ const ManagementEnterprise = () => {
       return res.items;
     },
   });
-
-  const handleTableChange: TableProps['onChange'] = (_, filters, sorter) => {
+  // type TableProps['onChange']
+  const handleTableChange: any = (_: any, filters: any, sorter: any) => {
     setTableParams({
       pagination: { ...tableParams.pagination },
       filters,

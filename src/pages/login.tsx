@@ -1,6 +1,6 @@
 import LoginForm from '@/components/login-form';
 
-import { Card, Layout } from 'antd';
+import { Card } from 'antd';
 import '@/scss/login.scss';
 import { apis } from '@/lib/apis';
 import { useEffect } from 'react';

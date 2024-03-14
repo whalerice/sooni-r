@@ -13,7 +13,7 @@ type State = {
 
 export const useThemeStore = create(
   persist<State>(
-    (set, get) => ({
+    (set) => ({
       isDarkMode: false,
       themeName: 'light',
       prefix: 'qt',

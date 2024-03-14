@@ -8,7 +8,7 @@ type State = {
 
 export const usePreloadStore = create(
   persist<State>(
-    (set, get) => ({
+    (set) => ({
       currentPage: '',
       setPage: (state) => set(() => ({ currentPage: state })),
     }),
