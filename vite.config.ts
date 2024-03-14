@@ -14,11 +14,11 @@ export default defineConfig({
   },
   server: {
     proxy: {
-      '/api': {
-        target: `${appUrl}/api/v1`,
-        changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, ''),
-      },
+      // '/api': {
+      //   target: `${appUrl}/api/v1`,
+      //   changeOrigin: true,
+      //   rewrite: (path) => path.replace(/^\/api/, ''),
+      // },
       '/uploaded': {
         target: 'http://192.168.0.164:8080/uploaded',
         changeOrigin: true,

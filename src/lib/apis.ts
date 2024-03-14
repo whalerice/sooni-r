@@ -3,6 +3,7 @@ import qs from 'qs';
 
 const instance = axios.create({
   // baseURL: import.meta.env.VITE_APP_API_URL + import.meta.env.VITE_APP_PATH,
+  baseURL: 'https://server-nest-khaki.vercel.app/api/v1',
   paramsSerializer: (value) =>
     qs.stringify(value, {
       arrayFormat: 'repeat',
@@ -65,10 +66,10 @@ const request = {
 
 export const apis = {
   app: {
-    health: () => request.get('/api/app/health'),
+    health: () => request.get('/app/health'),
   },
   user: {
-    login: (data: Login) => request.post('/api/user/login', data),
+    login: (data: Login) => request.post('/user/login', data),
     logout: (data: Logout) => request.post('/api/user/logout', data),
     sessionTouch: () => request.get('/api/user/session-touch'),
   },
