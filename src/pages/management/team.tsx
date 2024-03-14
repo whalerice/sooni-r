@@ -38,7 +38,7 @@ const columns: ColumnsType<DataType> = [
     title: '팀명',
     dataIndex: 'name',
     // render: (text: string) => <Link>{text}</Link>,
-    sorter: true,
+    // sorter: true,
   },
   {
     title: '팀원',

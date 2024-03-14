@@ -3,6 +3,7 @@ import { apis } from '@/lib/apis';
 import { useQuery } from '@tanstack/react-query';
 import {
   Button,
+  Card,
   Col,
   Flex,
   Input,
@@ -140,29 +141,30 @@ const ManagementEnterprise = () => {
 
   return (
     <>
-      <Flex
-        wrap="wrap"
-        gap={5}
-        justify="space-between"
-        className="data-table-search"
-      >
-        <Space>
-          <Select
-            placeholder="서비스 사용 여부"
-            onChange={handleSelectChange}
-            options={[
-              { value: true, label: '활성' },
-              { value: false, label: '비활성' },
-            ]}
-          />
-          <Search placeholder="텍스트 검색" enterButton onSearch={onSearch} />
-        </Space>
+      <Card size="small" style={{ marginBottom: '3rem' }}>
+        <Flex
+          wrap="wrap"
+          gap={5}
+          justify="space-between"
+          className="data-table-search"
+        >
+          <Space>
+            <Select
+              placeholder="서비스 사용 여부"
+              onChange={handleSelectChange}
+              options={[
+                { value: true, label: '활성' },
+                { value: false, label: '비활성' },
+              ]}
+            />
+            <Search placeholder="텍스트 검색" enterButton onSearch={onSearch} />
+          </Space>
 
-        <Tooltip title="검색 초기화">
-          <Button icon={<RedoOutlined />}></Button>
-        </Tooltip>
-      </Flex>
-
+          <Tooltip title="검색 초기화">
+            <Button icon={<RedoOutlined />}></Button>
+          </Tooltip>
+        </Flex>
+      </Card>
       <Flex vertical gap={10}>
         <Flex
           gap={5}
