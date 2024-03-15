@@ -4,8 +4,9 @@ import react from '@vitejs/plugin-react-swc';
 // const appUrl = 'http://192.168.0.164:8080';
 const appUrl = 'https://server-nest-khaki.vercel.app';
 // const appUrl = 'http://localhost:3300';
-const chatUrl = 'http://192.168.0.164:9090';
+// const chatUrl = 'http://192.168.0.164:9090';
 
+// https://vercel.com/docs/projects/project-configuration#rewriteshttps://vercel.com/docs/projects/project-configuration#rewrites
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
@@ -15,24 +16,24 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: `${appUrl}/api`,
+        target: `${appUrl}/api/v1`,
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ''),
       },
-      '/uploaded': {
-        target: 'http://192.168.0.164:8080/uploaded',
-        changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/uploaded/, ''),
-      },
-      '/chat': {
-        target: `${chatUrl}/chat/api/v1`,
-        changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/chat/, ''),
-      },
-      '/socket.io': {
-        target: 'ws://192.168.0.164:7000',
-        ws: true,
-      },
+      // '/uploaded': {
+      //   target: 'http://192.168.0.164:8080/uploaded',
+      //   changeOrigin: true,
+      //   rewrite: (path) => path.replace(/^\/uploaded/, ''),
+      // },
+      // '/chat': {
+      //   target: `${chatUrl}/chat/api/v1`,
+      //   changeOrigin: true,
+      //   rewrite: (path) => path.replace(/^\/chat/, ''),
+      // },
+      // '/socket.io': {
+      //   target: 'ws://192.168.0.164:7000',
+      //   ws: true,
+      // },
     },
     open: true,
     port: 3200,
