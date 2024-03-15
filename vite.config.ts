@@ -6,7 +6,6 @@ const appUrl = 'https://server-nest-khaki.vercel.app';
 // const appUrl = 'http://localhost:3300';
 // const chatUrl = 'http://192.168.0.164:9090';
 
-// https://vercel.com/docs/projects/project-configuration#rewriteshttps://vercel.com/docs/projects/project-configuration#rewrites
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
