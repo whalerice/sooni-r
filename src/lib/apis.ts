@@ -2,10 +2,6 @@ import axios from 'axios';
 import qs from 'qs';
 
 const instance = axios.create({
-  baseURL:
-    import.meta.env.MODE === 'production'
-      ? 'https://server-nest-khaki.vercel.app'
-      : '',
   // baseURL: import.meta.env.VITE_APP_API_URL + import.meta.env.VITE_APP_PATH,
   paramsSerializer: (value) =>
     qs.stringify(value, {
@@ -15,7 +11,7 @@ const instance = axios.create({
 });
 
 type SendParams = {
-  url: string;
+  u: string;
   method: 'GET' | 'POST' | 'PUT' | 'DELETE';
   data?: object;
   params?: object;
@@ -25,8 +21,14 @@ type SendParams = {
 // language: lang,
 const send = async (options: SendParams) => {
   //   const sessionToken = cookies().get('x-qbot-session')?.value;
+  const { u, method, data, params, isForm } = options;
 
-  const { url, method, data, params, isForm } = options;
+  const path = u.replace(/^\/api/, '');
+  let url =
+    import.meta.env.MODE === 'production'
+      ? `https://server-nest-khaki.vercel.app/api/v1${path}`
+      : u;
+
   try {
     const response = await instance.request({
       url,
@@ -58,13 +60,13 @@ const send = async (options: SendParams) => {
 };
 const request = {
   get: async (url: string, params?: object | undefined) =>
-    await send({ url, method: 'GET', data: undefined, params }),
+    await send({ u: url, method: 'GET', data: undefined, params }),
   post: async (
     url: string,
     data?: object | undefined,
     params?: object | undefined,
     isForm?: boolean,
-  ) => await send({ url, method: 'POST', data, params, isForm }),
+  ) => await send({ u: url, method: 'POST', data, params, isForm }),
 };
 
 export const apis = {
