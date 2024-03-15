@@ -18,6 +18,7 @@ export default defineConfig({
         target: `${appUrl}/api/v1`,
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ''),
+        secure: false,
       },
       // '/uploaded': {
       //   target: 'http://192.168.0.164:8080/uploaded',

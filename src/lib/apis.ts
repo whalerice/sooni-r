@@ -23,12 +23,12 @@ const send = async (options: SendParams) => {
   //   const sessionToken = cookies().get('x-qbot-session')?.value;
   const { u, method, data, params, isForm } = options;
 
-  const path = u.replace(/^\/api/, '');
-  let url =
-    import.meta.env.MODE === 'production'
-      ? `https://server-nest-khaki.vercel.app/api/v1${path}`
-      : u;
-
+  // const path = u.replace(/^\/api/, '');
+  // let url =
+  //   import.meta.env.MODE === 'production'
+  //     ? `https://server-nest-khaki.vercel.app/api/v1${path}`
+  //     : u;
+  let url = u;
   try {
     const response = await instance.request({
       url,
