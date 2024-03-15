@@ -2,7 +2,7 @@
   "rewrites": [
     { "source": "/(.*)", "destination": "/" },
     {
-      "source": "/api/:path*",
+      "source": "https://sooni-r.vercel.app/api/:path*",
       "destination": "https://server-nest-khaki.vercel.app/api/:path*"
     }
   ]
