@@ -5,5 +5,16 @@
       "source": "/api/:path*",
       "destination": "https://server-nest-khaki.vercel.app/api/v1/:path*"
     }
+  ],
+  "headers": [
+    {
+      "source": "/api/:path*",
+      "headers": [
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "*"
+        }
+      ]
+    }
   ]
 }
