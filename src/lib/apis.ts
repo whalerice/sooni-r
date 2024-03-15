@@ -2,7 +2,10 @@ import axios from 'axios';
 import qs from 'qs';
 
 const instance = axios.create({
-  // baseURL: 'https://server-nest-khaki.vercel.app',
+  baseURL:
+    import.meta.env.MODE === 'production'
+      ? 'https://server-nest-khaki.vercel.app'
+      : '',
   // baseURL: import.meta.env.VITE_APP_API_URL + import.meta.env.VITE_APP_PATH,
   paramsSerializer: (value) =>
     qs.stringify(value, {
