@@ -1,28 +1,12 @@
-import { useState } from 'react';
-import { apis } from '@/lib/apis';
-import { useQuery } from '@tanstack/react-query';
-import {
-  Button,
-  Card,
-  Col,
-  Flex,
-  Input,
-  Pagination,
-  Row,
-  Select,
-  Space,
-  Table,
-  Tag,
-  Tooltip,
-  Typography,
-} from 'antd';
-import { RedoOutlined, FileMarkdownOutlined } from '@ant-design/icons';
-// import type { TableProps } from 'antd';
+import DataTableSearch from '@/components/data-table-search';
+import DataTable from '@/components/data-table';
 import dayjs from 'dayjs';
-import { getDirection, getParams } from '@/lib/utils';
 
-const { Text } = Typography;
-const { Search } = Input;
+import { useEffect, useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { getDirection, getParams } from '@/lib/utils';
+import { apis } from '@/lib/apis';
+import { Tag } from 'antd';
 
 interface DataType {
   id: number;
@@ -83,14 +67,21 @@ const columns: ColumnsType<DataType> = [
 ];
 
 const ManagementEnterprise = () => {
-  const [total, setTotal] = useState<number>(0);
   const [tableParams, setTableParams] = useState<TableParams>({
     pagination: {
       current: 1,
       pageSize: 10,
+      total: 0,
     },
     sortField: 'id',
     sortOrder: getDirection('descend'),
+  });
+
+  const [sendProps, setSendProps] = useState<any>({
+    tableParams,
+    columns,
+    data: [],
+    isLoading: false,
   });
 
   const { data, isLoading } = useQuery({
@@ -103,124 +94,42 @@ const ManagementEnterprise = () => {
         ...tableParams,
         pagination: { ...tableParams.pagination, total: res.count },
       });
-      setTotal(res.count);
+
       return res.items;
     },
   });
-  // type TableProps['onChange']
-  const handleTableChange: any = (_: any, filters: any, sorter: any) => {
-    setTableParams({
-      pagination: { ...tableParams.pagination },
-      filters,
-      sortField: sorter.field,
-      sortOrder: getDirection(sorter.order),
+
+  const callback = (data: any) => {
+    console.log(data);
+    if (data.current) {
+      setTableParams({
+        ...tableParams,
+        pagination: { ...tableParams.pagination, ...data },
+      });
+    }
+
+    if (data.sorter) {
+      setTableParams({
+        ...tableParams,
+        sortField: data.sorter.field,
+        sortOrder: getDirection(data.sorter.order),
+      });
+    }
+  };
+
+  useEffect(() => {
+    setSendProps({
+      ...sendProps,
+      tableParams: tableParams,
+      data: data,
+      isLoading: isLoading,
     });
-  };
-
-  const onRowClick = (record: DataType) => {
-    console.log(record);
-  };
-
-  const onChange = (num: number) => {
-    setTableParams({
-      ...tableParams,
-      pagination: {
-        ...tableParams.pagination,
-        current: num,
-      },
-    });
-  };
-
-  const handleSelectChange = (value: string) => {
-    console.log(`selected ${value}`);
-  };
-
-  const onSearch = (value: string) => {
-    console.log(`selected ${value}`);
-  };
+  }, [data]);
 
   return (
     <>
-      <Card size="small" style={{ marginBottom: '3rem' }}>
-        <Flex
-          wrap="wrap"
-          gap={5}
-          justify="space-between"
-          className="data-table-search"
-        >
-          <Space>
-            <Select
-              placeholder="서비스 사용 여부"
-              onChange={handleSelectChange}
-              options={[
-                { value: true, label: '활성' },
-                { value: false, label: '비활성' },
-              ]}
-            />
-            <Search placeholder="텍스트 검색" enterButton onSearch={onSearch} />
-          </Space>
-
-          <Tooltip title="검색 초기화">
-            <Button icon={<RedoOutlined />}></Button>
-          </Tooltip>
-        </Flex>
-      </Card>
-      <Flex vertical gap={10}>
-        <Flex
-          gap={5}
-          justify="space-between"
-          align="center"
-          className="data-table-header"
-        >
-          <div>
-            <Text strong>회사목록</Text>
-            <span
-              style={{
-                fontSize: '1.2rem',
-                marginLeft: '0.5rem',
-                color: 'grey',
-              }}
-            >
-              총 {total} 건
-            </span>
-          </div>
-          <Tooltip title="엑셀 다운로드">
-            <Button
-              type="text"
-              icon={<FileMarkdownOutlined />}
-              style={{ color: 'green' }}
-            ></Button>
-          </Tooltip>
-        </Flex>
-        <Table
-          showSorterTooltip={false}
-          columns={columns}
-          rowKey={(record) => record.id}
-          dataSource={data}
-          loading={isLoading}
-          pagination={false}
-          onChange={handleTableChange}
-          scroll={{ x: 800 }}
-          sortDirections={['descend', 'ascend']}
-          onRow={(record) => {
-            return {
-              onClick: () => onRowClick(record),
-            };
-          }}
-        />
-        <Row align="middle" justify="space-between">
-          <Col></Col>
-          <Col>
-            <Pagination
-              onChange={onChange}
-              // showTotal={(total) => `Total ${total} items`}
-              defaultCurrent={tableParams.pagination.current}
-              defaultPageSize={tableParams.pagination.pageSize}
-              total={tableParams.pagination?.total}
-            />
-          </Col>
-        </Row>
-      </Flex>
+      <DataTableSearch />
+      <DataTable {...sendProps} callback={callback} />
     </>
   );
 };

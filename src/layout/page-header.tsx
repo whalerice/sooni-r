@@ -34,6 +34,11 @@ const PageHeader = () => {
           팀 추가
         </Button>
       )}
+      {current === 'ManagementManager' && (
+        <Button type="primary" ghost icon={<PlusOutlined />}>
+          관리자 추가
+        </Button>
+      )}
     </Flex>
   );
 };

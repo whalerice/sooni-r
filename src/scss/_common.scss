@@ -13,12 +13,9 @@
   width: calc(100% + 3rem);
   padding: 1rem 1.5rem;
   transform: translate(-1.5rem, 0);
+  z-index: 99;
 }
 
 .data-table-search {
-  //   background-color: #fff;
-  //   padding: 1.5rem;
-  //   border-radius: 0.5rem;
-  //   border: 1px solid rgba(0, 0, 0, 0.1);
-  //   margin-bottom: 1rem;
+  margin-bottom: 3rem;
 }
