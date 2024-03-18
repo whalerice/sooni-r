@@ -2,9 +2,9 @@ import DataTableSearch from '@/components/data-table-search';
 import DataTable from '@/components/data-table';
 import dayjs from 'dayjs';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { getDirection, getParams } from '@/lib/utils';
+import { getParams } from '@/lib/utils';
 import { apis } from '@/lib/apis';
 import { Tag } from 'antd';
 
@@ -74,14 +74,7 @@ const ManagementEnterprise = () => {
       total: 0,
     },
     sortField: 'id',
-    sortOrder: getDirection('descend'),
-  });
-
-  const [sendProps, setSendProps] = useState<any>({
-    tableParams,
-    columns,
-    data: [],
-    isLoading: false,
+    sortOrder: 'DESC',
   });
 
   const { data, isLoading } = useQuery({
@@ -100,36 +93,19 @@ const ManagementEnterprise = () => {
   });
 
   const callback = (data: any) => {
-    console.log(data);
-    if (data.current) {
-      setTableParams({
-        ...tableParams,
-        pagination: { ...tableParams.pagination, ...data },
-      });
-    }
-
-    if (data.sorter) {
-      setTableParams({
-        ...tableParams,
-        sortField: data.sorter.field,
-        sortOrder: getDirection(data.sorter.order),
-      });
-    }
+    setTableParams(data);
   };
-
-  useEffect(() => {
-    setSendProps({
-      ...sendProps,
-      tableParams: tableParams,
-      data: data,
-      isLoading: isLoading,
-    });
-  }, [data]);
 
   return (
     <>
       <DataTableSearch />
-      <DataTable {...sendProps} callback={callback} />
+      <DataTable
+        tableParams={tableParams}
+        columns={columns}
+        data={data}
+        isLoading={isLoading}
+        callback={callback}
+      />
     </>
   );
 };

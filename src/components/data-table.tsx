@@ -10,11 +10,11 @@ import {
 } from 'antd';
 import type { TableProps } from 'antd';
 import { FileMarkdownOutlined } from '@ant-design/icons';
+import { getDirection } from '@/lib/utils';
 
 const { Text } = Typography;
 
 type Props = {
-  total: number;
   columns: ColumnsType<any>;
   data: any[];
   isLoading: boolean;
@@ -36,14 +36,26 @@ const DataTable = (props: Props) => {
     filters,
     sorter: any,
   ) => {
-    callback({ filters: filters, sorter: sorter });
+    callback({
+      ...tableParams,
+      filters,
+      sortField: sorter.field,
+      sortOrder: getDirection(sorter.order),
+    });
   };
-  const onRowClick = (record: any) => {
-    console.log(record);
-  };
+  // const onRowClick = (record: any) => {
+  //   console.log(record);
+  // };
 
   const onChange = (page: number, pageSize: number) => {
-    callback({ current: page, pageSize: pageSize });
+    callback({
+      ...tableParams,
+      pagination: {
+        ...tableParams.pagination,
+        current: page,
+        pageSize: pageSize,
+      },
+    });
   };
 
   return (
@@ -74,11 +86,11 @@ const DataTable = (props: Props) => {
         onChange={handleTableChange}
         scroll={{ x: 800 }}
         sortDirections={['descend', 'ascend']}
-        onRow={(record) => {
-          return {
-            onClick: () => onRowClick(record),
-          };
-        }}
+        // onRow={(record) => {
+        //   return {
+        //     onClick: () => onRowClick(record),
+        //   };
+        // }}
       />
       <Row align="middle" justify="space-between">
         <Col></Col>
