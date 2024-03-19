@@ -18,4 +18,7 @@
 
 .data-table-search {
   margin-bottom: 3rem;
+  [class*='select-single'] {
+    min-width: 12rem;
+  }
 }

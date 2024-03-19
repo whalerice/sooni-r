@@ -11,18 +11,20 @@ import {
 import type { TableProps } from 'antd';
 import { FileMarkdownOutlined } from '@ant-design/icons';
 import { getDirection } from '@/lib/utils';
+import { useEffect, useState } from 'react';
 
 const { Text } = Typography;
 
 type Props = {
   columns: ColumnsType<any>;
-  data: any[];
+  data: any;
   isLoading: boolean;
   tableParams: TableParams;
   callback: (data: any) => void;
 };
 
 const DataTable = (props: Props) => {
+  const [total, setTotal] = useState<number>(0);
   const { columns, data, isLoading, tableParams, callback } = props;
 
   // sorter type
@@ -43,9 +45,6 @@ const DataTable = (props: Props) => {
       sortOrder: getDirection(sorter.order),
     });
   };
-  // const onRowClick = (record: any) => {
-  //   console.log(record);
-  // };
 
   const onChange = (page: number, pageSize: number) => {
     callback({
@@ -57,6 +56,12 @@ const DataTable = (props: Props) => {
       },
     });
   };
+
+  useEffect(() => {
+    if (tableParams.pagination.total) {
+      setTotal(tableParams.pagination.total);
+    }
+  }, [tableParams]);
 
   return (
     <Flex vertical gap={10}>
@@ -99,7 +104,7 @@ const DataTable = (props: Props) => {
             onChange={onChange}
             defaultCurrent={tableParams.pagination.current}
             defaultPageSize={tableParams.pagination.pageSize}
-            total={tableParams.pagination.total}
+            total={total}
             showSizeChanger
           />
         </Col>

@@ -7,6 +7,7 @@ import { useQuery } from '@tanstack/react-query';
 import { getParams } from '@/lib/utils';
 import { apis } from '@/lib/apis';
 import { Tag } from 'antd';
+import { SearchItemType } from '@/lib/enums';
 
 interface DataType {
   id: number;
@@ -96,9 +97,16 @@ const ManagementEnterprise = () => {
     setTableParams(data);
   };
 
+  const onSearch = (e: any) => {
+    console.log('onSearch', e);
+  };
+
   return (
     <>
-      <DataTableSearch />
+      <DataTableSearch
+        search={onSearch}
+        item={[SearchItemType.USE, SearchItemType.TEXT]}
+      />
       <DataTable
         tableParams={tableParams}
         columns={columns}

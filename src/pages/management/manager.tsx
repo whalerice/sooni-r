@@ -1,21 +1,9 @@
+import DataTable from '@/components/data-table';
+import dayjs from 'dayjs';
+
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import {
-  Button,
-  Col,
-  Flex,
-  Pagination,
-  Row,
-  Table,
-  Tag,
-  Tooltip,
-  Typography,
-} from 'antd';
-import { FileMarkdownOutlined } from '@ant-design/icons';
-import dayjs from 'dayjs';
-import { getDirection, getParams } from '@/lib/utils';
-
-const { Text } = Typography;
+import { getParams } from '@/lib/utils';
 
 interface DataType {
   id: number;
@@ -64,97 +52,35 @@ const columns: ColumnsType<DataType> = [
 ];
 
 const ManagementManager = () => {
-  const [total, setTotal] = useState<number>(0);
   const [tableParams, setTableParams] = useState<TableParams>({
     pagination: {
       current: 1,
       pageSize: 10,
+      total: 0,
     },
     sortField: 'id',
-    sortOrder: getDirection('descend'),
+    sortOrder: 'DESC',
   });
 
   const { data, isLoading } = useQuery({
     queryKey: ['managerList', getParams(tableParams)],
     queryFn: async () => {
-      setTotal(0);
       return [];
     },
   });
-  // type TableProps['onChange']
-  const handleTableChange: any = (_: any, filters: any, sorter: any) => {
-    setTableParams({
-      pagination: { ...tableParams.pagination },
-      filters,
-      sortField: sorter.field,
-      sortOrder: getDirection(sorter.order),
-    });
-  };
 
-  const onChange = (num: number) => {
-    setTableParams({
-      ...tableParams,
-      pagination: {
-        ...tableParams.pagination,
-        current: num,
-      },
-    });
+  const callback = (data: any) => {
+    setTableParams(data);
   };
 
   return (
-    <>
-      <Flex vertical gap={10}>
-        <Flex
-          gap={5}
-          justify="space-between"
-          align="center"
-          className="data-table-header"
-        >
-          <div>
-            <Text strong>관리자 목록</Text>
-            <span
-              style={{
-                fontSize: '1.2rem',
-                marginLeft: '0.5rem',
-                color: 'grey',
-              }}
-            >
-              총 {total} 건
-            </span>
-          </div>
-          <Tooltip title="엑셀 다운로드">
-            <Button
-              type="text"
-              icon={<FileMarkdownOutlined />}
-              style={{ color: 'green' }}
-            ></Button>
-          </Tooltip>
-        </Flex>
-        <Table
-          showSorterTooltip={false}
-          columns={columns}
-          rowKey={(record) => record.id}
-          dataSource={data}
-          loading={isLoading}
-          pagination={false}
-          onChange={handleTableChange}
-          scroll={{ x: 800 }}
-          sortDirections={['descend', 'ascend']}
-        />
-        <Row align="middle" justify="space-between">
-          <Col></Col>
-          <Col>
-            <Pagination
-              onChange={onChange}
-              // showTotal={(total) => `Total ${total} items`}
-              defaultCurrent={tableParams.pagination.current}
-              defaultPageSize={tableParams.pagination.pageSize}
-              total={tableParams.pagination?.total}
-            />
-          </Col>
-        </Row>
-      </Flex>
-    </>
+    <DataTable
+      tableParams={tableParams}
+      columns={columns}
+      data={data}
+      isLoading={isLoading}
+      callback={callback}
+    />
   );
 };
 

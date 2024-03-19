@@ -8,3 +8,15 @@ export const AgentStatus = {
   OFFLINE: 'OFFLINE',
   AWAY: 'AWAY',
 } as const;
+
+export const Directions: { [key: string]: string } = {
+  descend: 'DESC',
+  ascend: 'ASC',
+} as const;
+
+export const SearchItemType = {
+  USE: 'use',
+  TEAM: 'team',
+  MESSAGE: 'message',
+  TEXT: 'text',
+} as const;
