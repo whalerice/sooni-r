@@ -15,6 +15,7 @@ export const Directions: { [key: string]: string } = {
 } as const;
 
 export const SearchItemType = {
+  DATE: 'date',
   USE: 'use',
   TEAM: 'team',
   MESSAGE: 'message',

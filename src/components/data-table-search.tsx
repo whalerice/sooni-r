@@ -1,4 +1,14 @@
-import { Button, Card, Flex, Input, Select, SelectProps, Tooltip } from 'antd';
+import type { Dayjs } from 'dayjs';
+import {
+  Button,
+  Card,
+  DatePicker,
+  Flex,
+  Input,
+  Select,
+  SelectProps,
+  Tooltip,
+} from 'antd';
 import { RedoOutlined, SearchOutlined } from '@ant-design/icons';
 import { useState } from 'react';
 import { SearchItemType } from '@/lib/enums';
@@ -7,6 +17,8 @@ type Props = {
   item: string[];
   search: (e: any) => void;
 };
+const { RangePicker } = DatePicker;
+const dateFormat = 'YYYY-MM-DD';
 
 const DataTableSearch = (props: Props) => {
   const { search, item } = props;
@@ -15,6 +27,7 @@ const DataTableSearch = (props: Props) => {
   const [use, setUse] = useState<SelectProps['options']>();
   const [team, setTeam] = useState<SelectProps['options']>();
   const [messageType, setMessageType] = useState<SelectProps['options']>();
+  const [date, setDate] = useState<string[] | undefined>(undefined);
 
   const handleChange = (item: SelectProps['options'], group: string) => {
     switch (group) {
@@ -44,6 +57,11 @@ const DataTableSearch = (props: Props) => {
     if (messageType) {
       items = { ...items, messageType: team };
     }
+
+    if (date) {
+      items = { ...items, dateRange: date };
+    }
+
     search({ text, ...items });
   };
 
@@ -55,9 +73,23 @@ const DataTableSearch = (props: Props) => {
     setMessageType(undefined);
   };
 
+  const onRangeChange = (
+    dates: null | (Dayjs | null)[],
+    dateStrings: string[],
+  ) => {
+    if (dates) {
+      setDate([dateStrings[0], dateStrings[1]]);
+    } else {
+      console.log('Clear');
+    }
+  };
+
   return (
     <Card size="small" className="data-table-search">
       <Flex wrap="wrap" gap={5}>
+        {item.filter((e) => e === SearchItemType.DATE).length > 0 && (
+          <RangePicker format={dateFormat} onChange={onRangeChange} />
+        )}
         {item.filter((e) => e === SearchItemType.USE).length > 0 && (
           <Select
             labelInValue

@@ -82,20 +82,20 @@ export const routes: RoutesType[] = [
         haveAuthority: [RoleType.SUPER, RoleType.ADMIN, RoleType.AGENT],
         children: [
           {
-            path: 'search',
-            id: 'TicketSearch',
-            element: <TicketSearch />,
-            label: '모든티켓조회',
-            icon: <TagsOutlined />,
-            haveAuthority: [RoleType.SUPER, RoleType.ADMIN],
-          },
-          {
             path: 'own',
             id: 'TicketOwn',
             element: <TicketOwn />,
             label: '나의티켓',
             icon: <TagsOutlined />,
             haveAuthority: [RoleType.AGENT],
+          },
+          {
+            path: 'search',
+            id: 'TicketSearch',
+            element: <TicketSearch />,
+            label: '모든티켓조회',
+            icon: <TagsOutlined />,
+            haveAuthority: [RoleType.SUPER, RoleType.ADMIN, RoleType.AGENT],
           },
         ],
       },
@@ -127,7 +127,7 @@ export const routes: RoutesType[] = [
             element: <ManagementMember />,
             label: '팀원관리',
             icon: <SolutionOutlined />,
-            haveAuthority: [RoleType.SUPER, RoleType.ADMIN],
+            haveAuthority: [RoleType.SUPER, RoleType.ADMIN, RoleType.AGENT],
           },
           {
             path: 'manager',
@@ -143,7 +143,7 @@ export const routes: RoutesType[] = [
             element: <ManagementCounselor />,
             label: '상담사',
             icon: <CustomerServiceOutlined />,
-            haveAuthority: [RoleType.SUPER, RoleType.ADMIN],
+            haveAuthority: [RoleType.SUPER, RoleType.ADMIN, RoleType.AGENT],
           },
           {
             path: 'message',

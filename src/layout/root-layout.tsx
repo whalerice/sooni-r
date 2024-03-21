@@ -5,6 +5,7 @@ import {
   StyleProvider,
 } from '@ant-design/cssinjs';
 import { themeAntModes, themeConfig } from '@/lib/theme-config';
+import 'dayjs/locale/ko';
 import ko from 'antd/locale/ko_KR';
 
 import '@/scss/index.scss';
