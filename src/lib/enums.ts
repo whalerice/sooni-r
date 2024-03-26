@@ -21,3 +21,10 @@ export const SearchItemType = {
   MESSAGE: 'message',
   TEXT: 'text',
 } as const;
+
+export const SearchItemTypes = {
+  DATERANGE: 'dateRange',
+  TEXT: 'text',
+  SELECT: 'select',
+  TEAM: 'team',
+} as const;

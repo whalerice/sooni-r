@@ -1,145 +1,133 @@
-import type { Dayjs } from 'dayjs';
+// import type { Dayjs } from 'dayjs';
 import {
   Button,
   Card,
   DatePicker,
-  Flex,
   Input,
+  Flex,
   Select,
   SelectProps,
+  Space,
   Tooltip,
+  // Tooltip,
 } from 'antd';
 import { RedoOutlined, SearchOutlined } from '@ant-design/icons';
 import { useState } from 'react';
-import { SearchItemType } from '@/lib/enums';
+import { SearchItemTypes } from '@/lib/enums';
+
+interface IPropsItems {
+  type: any;
+  placeholder?: string;
+  title?: string;
+  options?: SelectProps['options'];
+}
 
 type Props = {
-  item: string[];
+  items: IPropsItems[];
   search: (e: any) => void;
 };
+
+type dataTaype = {
+  idx: number;
+  type: string;
+  value: any;
+};
+
 const { RangePicker } = DatePicker;
 const dateFormat = 'YYYY-MM-DD';
 
 const DataTableSearch = (props: Props) => {
-  const { search, item } = props;
-  const [text, setText] = useState<string>('');
+  const { search, items } = props;
+  const [data, setData] = useState<dataTaype[]>([]);
 
-  const [use, setUse] = useState<SelectProps['options']>();
-  const [team, setTeam] = useState<SelectProps['options']>();
-  const [messageType, setMessageType] = useState<SelectProps['options']>();
-  const [date, setDate] = useState<string[] | undefined>(undefined);
-
-  const handleChange = (item: SelectProps['options'], group: string) => {
-    switch (group) {
-      case SearchItemType.USE:
-        setUse(item);
-        break;
-      case SearchItemType.TEAM:
-        setTeam(item);
-        break;
-      case SearchItemType.MESSAGE:
-        setMessageType(item);
-        break;
-
-      default:
-        break;
+  const callback = (idx: number, type: string, value: any) => {
+    for (let i = 0; i < data.length; i++) {
+      if (data[i].idx === idx) {
+        data.splice(i, 1);
+        i--;
+      }
     }
+    setData([...data, { idx, type, value }]);
   };
 
   const onSearch = () => {
-    let items = {};
-    if (use) {
-      items = { ...items, use: use };
-    }
-    if (team) {
-      items = { ...items, team: team };
-    }
-    if (messageType) {
-      items = { ...items, messageType: team };
-    }
-
-    if (date) {
-      items = { ...items, dateRange: date };
-    }
-
-    search({ text, ...items });
+    const result = data.filter((e) => e.value);
+    console.log(result);
+    search(result);
   };
 
   const onReset = () => {
     console.log('reset');
-    setText('');
-    setUse(undefined);
-    setTeam(undefined);
-    setMessageType(undefined);
-  };
-
-  const onRangeChange = (
-    dates: null | (Dayjs | null)[],
-    dateStrings: string[],
-  ) => {
-    if (dates) {
-      setDate([dateStrings[0], dateStrings[1]]);
-    } else {
-      console.log('Clear');
-    }
   };
 
   return (
     <Card size="small" className="data-table-search">
       <Flex wrap="wrap" gap={5}>
-        {item.filter((e) => e === SearchItemType.DATE).length > 0 && (
-          <RangePicker format={dateFormat} onChange={onRangeChange} />
-        )}
-        {item.filter((e) => e === SearchItemType.USE).length > 0 && (
-          <Select
-            labelInValue
-            value={use}
-            placeholder="사용 여부"
-            onChange={(e) => handleChange(e, SearchItemType.USE)}
-            options={[
-              { label: '활성', value: 0 },
-              { label: '비활성', value: 1 },
-            ]}
-          />
-        )}
-        {item.filter((e) => e === SearchItemType.TEAM).length > 0 && (
-          <Select
-            labelInValue
-            value={team}
-            placeholder="팀 선택"
-            onChange={(e) => handleChange(e, SearchItemType.TEAM)}
-            options={[
-              { label: '이마트1팀', value: 33 },
-              { label: 'NH1팀', value: 90 },
-              { label: '퀀텀1팀', value: 10 },
-            ]}
-          />
-        )}
+        {items.map((item, idx) => {
+          if (item.type === SearchItemTypes.TEXT && item.title) {
+            return (
+              <Space.Compact key={idx}>
+                <Input
+                  onChange={(e) => callback(idx, item.type, e.target.value)}
+                  addonBefore={item.title}
+                  placeholder={item.placeholder}
+                  allowClear
+                />
+              </Space.Compact>
+            );
+          }
+          if (item.type === SearchItemTypes.TEXT && !item.title) {
+            return (
+              <Input
+                key={idx}
+                onChange={(e) => callback(idx, item.type, e.target.value)}
+                prefix={<SearchOutlined />}
+                placeholder={item.placeholder}
+                allowClear
+                onPressEnter={onSearch}
+              />
+            );
+          }
+          if (item.type === SearchItemTypes.DATERANGE) {
+            return (
+              <RangePicker
+                key={idx}
+                format={dateFormat}
+                onChange={(_, dateStrings) =>
+                  callback(idx, item.type, dateStrings)
+                }
+              />
+            );
+          }
+          if (item.type === SearchItemTypes.SELECT) {
+            return (
+              <Select
+                key={idx}
+                labelInValue
+                placeholder={item.placeholder}
+                onChange={(e) => callback(idx, item.type, e)}
+                options={item.options}
+              />
+            );
+          }
+          if (item.type === SearchItemTypes.TEAM) {
+            return (
+              <Select
+                key={idx}
+                labelInValue
+                placeholder="팀 선택"
+                onChange={(e) => callback(idx, item.type, e)}
+                options={[
+                  { label: '이마트1팀', value: 33 },
+                  { label: 'NH1팀', value: 90 },
+                  { label: '퀀텀1팀', value: 10 },
+                ]}
+              />
+            );
+          }
 
-        {item.filter((e) => e === SearchItemType.MESSAGE).length > 0 && (
-          <Select
-            labelInValue
-            value={messageType}
-            placeholder="메세지 타입"
-            onChange={(e) => handleChange(e, SearchItemType.MESSAGE)}
-            options={[
-              { label: '공통', value: 'COMMON' },
-              { label: '개인', value: 'PERSONAL' },
-            ]}
-          />
-        )}
-
-        {item.filter((e) => e === SearchItemType.TEXT).length > 0 && (
-          <Input
-            value={text}
-            onChange={(e) => setText(e.target.value)}
-            prefix={<SearchOutlined />}
-            placeholder="텍스트 검색"
-            allowClear
-            onPressEnter={onSearch}
-          />
-        )}
-
+          return <></>;
+        })}
         <Button type="primary" onClick={onSearch}>
           검색
         </Button>

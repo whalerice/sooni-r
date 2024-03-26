@@ -1,5 +1,5 @@
-import DataTableSearch from '@/components/data-table-search';
 import DataTable from '@/components/data-table';
+import DataTableSearch from '@/components/data-table-search';
 import dayjs from 'dayjs';
 
 import { useState } from 'react';
@@ -7,7 +7,7 @@ import { useQuery } from '@tanstack/react-query';
 import { getParams } from '@/lib/utils';
 import { apis } from '@/lib/apis';
 import { Tag } from 'antd';
-import { SearchItemType } from '@/lib/enums';
+import { SearchItemTypes } from '@/lib/enums';
 
 interface DataType {
   id: number;
@@ -105,7 +105,17 @@ const ManagementEnterprise = () => {
     <>
       <DataTableSearch
         search={onSearch}
-        item={[SearchItemType.USE, SearchItemType.TEXT]}
+        items={[
+          {
+            type: SearchItemTypes.SELECT,
+            placeholder: '사용 여부',
+            options: [
+              { label: '활성', value: 0 },
+              { label: '비활성', value: 1 },
+            ],
+          },
+          { type: SearchItemTypes.TEXT, placeholder: '텍스트를 입력해주세요.' },
+        ]}
       />
       <DataTable
         tableParams={tableParams}

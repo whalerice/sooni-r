@@ -1,4 +1,3 @@
-import DataTableSearch from '@/components/data-table-search';
 import DataTable from '@/components/data-table';
 import dayjs from 'dayjs';
 
@@ -7,7 +6,8 @@ import { useQuery } from '@tanstack/react-query';
 import { getParams } from '@/lib/utils';
 // import { apis } from '@/lib/apis';
 // import { Tag } from 'antd';
-import { SearchItemType } from '@/lib/enums';
+import { SearchItemTypes } from '@/lib/enums';
+import DataTableSearch from '@/components/data-table-search';
 
 interface DataType {
   id: number;
@@ -88,13 +88,47 @@ export default function TicketSearch() {
     setTableParams(data);
   };
 
-  const onSearch = (e: any) => {
-    console.log('onSearch', e);
+  const onCallBack = (e: any) => {
+    console.log(e);
   };
 
   return (
     <>
-      <DataTableSearch search={onSearch} item={[SearchItemType.DATE]} />
+      <DataTableSearch
+        search={onCallBack}
+        items={[
+          { type: SearchItemTypes.DATERANGE },
+          {
+            type: SearchItemTypes.SELECT,
+            placeholder: '티켓 상태',
+            options: [
+              { label: '전체', value: 0 },
+              { label: '대기', value: 1 },
+              { label: '상담중', value: 2 },
+              { label: '유후', value: 3 },
+              { label: '완료', value: 4 },
+            ],
+          },
+          {
+            type: SearchItemTypes.TEXT,
+            placeholder: '전체',
+            title: '상담사',
+          },
+          {
+            type: SearchItemTypes.TEXT,
+            placeholder: '전체',
+            title: '고객명',
+          },
+          {
+            type: SearchItemTypes.TEAM,
+          },
+          {
+            type: SearchItemTypes.TEXT,
+            placeholder: '전체',
+            title: '티켓 아이디',
+          },
+        ]}
+      />
       <DataTable
         tableParams={tableParams}
         columns={columns}
