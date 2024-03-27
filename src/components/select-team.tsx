@@ -1,3 +1,5 @@
+import { apis } from '@/lib/apis';
+import { getParams } from '@/lib/utils';
 import { useQuery } from '@tanstack/react-query';
 import { Select } from 'antd';
 import type { SelectProps } from 'antd';
@@ -11,13 +13,21 @@ export default function SelectTeam(props: PropsType) {
   const { onReturn, styles } = props;
 
   const { data } = useQuery({
-    queryKey: ['teamList'],
+    queryKey: ['selectTeamList'],
     queryFn: async () => {
-      return [
-        { label: '이마트1팀', value: 33 },
-        { label: 'NH1팀', value: 90 },
-        { label: '퀀텀1팀', value: 10 },
-      ];
+      const res = await apis.team.list(
+        getParams({
+          pagination: {
+            current: 1,
+            pageSize: 10,
+          },
+          sortField: 'id',
+          sortOrder: 'descend',
+        }),
+      );
+
+      const items = res.items.map((e: any) => ({ label: e.name, value: e.id }));
+      return items;
     },
   });
 

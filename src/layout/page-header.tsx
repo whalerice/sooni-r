@@ -39,6 +39,26 @@ const PageHeader = () => {
           관리자 추가
         </Button>
       )}
+      {current === 'ManagementCounselor' && (
+        <Button type="primary" ghost icon={<PlusOutlined />}>
+          상담사 추가
+        </Button>
+      )}
+      {current === 'ManagementMessage' && (
+        <Button type="primary" ghost icon={<PlusOutlined />}>
+          챗봇 메세지 추가
+        </Button>
+      )}
+      {current === 'ManagementQuick' && (
+        <Button type="primary" ghost icon={<PlusOutlined />}>
+          빠른답변 추가
+        </Button>
+      )}
+      {current === 'VoiceScenario' && (
+        <Button type="primary" ghost icon={<PlusOutlined />}>
+          등록하기
+        </Button>
+      )}
     </Flex>
   );
 };

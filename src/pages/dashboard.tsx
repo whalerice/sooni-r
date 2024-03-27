@@ -1,17 +1,17 @@
 export default function Dashboard() {
-  const items = [];
+  // const items = [];
 
-  for (let i = 0; i < 30; i++) {
-    const element = 'ddddddddddd' + [i];
-    items.push(element);
-  }
+  // for (let i = 0; i < 30; i++) {
+  //   const element = 'ddddddddddd' + [i];
+  //   items.push(element);
+  // }
 
   return (
     <>
       dashboard <br />
-      {items.map((e) => {
+      {/* {items.map((e) => {
         return <p key={e}>{e}</p>;
-      })}
+      })} */}
     </>
   );
 }

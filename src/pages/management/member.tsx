@@ -56,21 +56,21 @@ export default function ManagementMember() {
     setTableParams(data);
   };
 
-  const onCallBack = (e: any) => {
+  const onSearch = (e: any) => {
     console.log(e);
   };
 
   return (
     <>
       <DataTableSearch
-        search={onCallBack}
+        search={onSearch}
         items={[
           {
             type: SearchItemTypes.TEAM,
           },
           {
             type: SearchItemTypes.TEXT,
-            placeholder: '이름/로그인 아이디 검색',
+            placeholder: '이름/로그인ID 검색',
           },
         ]}
       />
