@@ -1,4 +1,5 @@
 import DataTable from '@/components/data-table';
+import DataTableSearch from '@/components/data-table-search';
 import dayjs from 'dayjs';
 
 import { useState } from 'react';
@@ -7,7 +8,6 @@ import { getParams } from '@/lib/utils';
 // import { apis } from '@/lib/apis';
 // import { Tag } from 'antd';
 import { SearchItemTypes } from '@/lib/enums';
-import DataTableSearch from '@/components/data-table-search';
 
 interface DataType {
   id: number;
@@ -99,7 +99,7 @@ export default function TicketSearch() {
         items={[
           { type: SearchItemTypes.DATERANGE },
           {
-            type: SearchItemTypes.SELECT,
+            type: SearchItemTypes.MULTI,
             placeholder: '티켓 상태',
             options: [
               { label: '전체', value: 0 },

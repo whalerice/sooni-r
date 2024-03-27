@@ -14,17 +14,10 @@ export const Directions: { [key: string]: string } = {
   ascend: 'ASC',
 } as const;
 
-export const SearchItemType = {
-  DATE: 'date',
-  USE: 'use',
-  TEAM: 'team',
-  MESSAGE: 'message',
-  TEXT: 'text',
-} as const;
-
 export const SearchItemTypes = {
   DATERANGE: 'dateRange',
   TEXT: 'text',
   SELECT: 'select',
+  MULTI: 'multi',
   TEAM: 'team',
 } as const;

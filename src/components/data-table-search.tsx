@@ -66,7 +66,7 @@ const DataTableSearch = (props: Props) => {
         {items.map((item, idx) => {
           if (item.type === SearchItemTypes.TEXT && item.title) {
             return (
-              <Space.Compact key={idx}>
+              <Space.Compact key={idx} style={{ flex: 'auto' }}>
                 <Input
                   onChange={(e) => callback(idx, item.type, e.target.value)}
                   addonBefore={item.title}
@@ -79,6 +79,7 @@ const DataTableSearch = (props: Props) => {
           if (item.type === SearchItemTypes.TEXT && !item.title) {
             return (
               <Input
+                style={{ minWidth: '20rem', flex: 1 }}
                 key={idx}
                 onChange={(e) => callback(idx, item.type, e.target.value)}
                 prefix={<SearchOutlined />}
@@ -91,6 +92,7 @@ const DataTableSearch = (props: Props) => {
           if (item.type === SearchItemTypes.DATERANGE) {
             return (
               <RangePicker
+                style={{ flex: 'auto' }}
                 key={idx}
                 format={dateFormat}
                 onChange={(_, dateStrings) =>
@@ -103,6 +105,20 @@ const DataTableSearch = (props: Props) => {
             return (
               <Select
                 key={idx}
+                style={{ minWidth: '12rem', flex: 1 }}
+                labelInValue
+                placeholder={item.placeholder}
+                onChange={(e) => callback(idx, item.type, e)}
+                options={item.options}
+              />
+            );
+          }
+          if (item.type === SearchItemTypes.MULTI) {
+            return (
+              <Select
+                style={{ minWidth: '12rem', flex: 'auto' }}
+                key={idx}
+                mode="multiple"
                 labelInValue
                 placeholder={item.placeholder}
                 onChange={(e) => callback(idx, item.type, e)}
@@ -114,6 +130,7 @@ const DataTableSearch = (props: Props) => {
             return (
               <Select
                 key={idx}
+                style={{ minWidth: '12rem', flex: 1 }}
                 labelInValue
                 placeholder="팀 선택"
                 onChange={(e) => callback(idx, item.type, e)}
@@ -128,7 +145,7 @@ const DataTableSearch = (props: Props) => {
 
           return <></>;
         })}
-        <Button type="primary" onClick={onSearch}>
+        <Button type="primary" onClick={onSearch} style={{ minWidth: '10rem' }}>
           검색
         </Button>
         <Tooltip title="검색 초기화">

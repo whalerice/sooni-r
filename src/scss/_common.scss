@@ -18,7 +18,15 @@
 
 .data-table-search {
   margin-bottom: 3rem;
-  [class*='select-single'] {
-    min-width: 12rem;
-  }
+  // [class*='select-single'] {
+  //   min-width: 12rem;
+  //   flex: 1;
+  // }
+  // [class*='input-affix-wrapper'] {
+  //   // width: auto;
+  //   // flex: auto;
+  // }
+  // [class*='btn-primary'] {
+  //   min-width: 10rem;
+  // }
 }
