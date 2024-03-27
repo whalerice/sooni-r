@@ -1,5 +1,6 @@
 import DataTable from '@/components/data-table';
 import DataTableSearch from '@/components/data-table-search';
+import ScenarioFlow from '@/components/scenario-flow';
 import dayjs from 'dayjs';
 
 import { useState } from 'react';
@@ -107,6 +108,7 @@ export default function VoiceScenario() {
         isLoading={isLoading}
         callback={callback}
       />
+      <ScenarioFlow />
     </>
   );
 }
