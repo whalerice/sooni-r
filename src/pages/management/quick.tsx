@@ -73,9 +73,7 @@ export default function ManagementQuick() {
     setTableParams(data);
   };
 
-  const onSearch = (e: any) => {
-    // console.log(e);
-  };
+  const onSearch = () => {};
 
   return (
     <>

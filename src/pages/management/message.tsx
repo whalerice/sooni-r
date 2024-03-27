@@ -67,9 +67,7 @@ export default function ManagementMessage() {
     setTableParams(data);
   };
 
-  const onSearch = (e: any) => {
-    // console.log(e);
-  };
+  const onSearch = () => {};
 
   return (
     <>

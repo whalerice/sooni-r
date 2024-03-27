@@ -83,7 +83,7 @@ const initialEdges = [
 ];
 
 const ScenarioFlow = () => {
-  const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
+  const [nodes, _, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
   const onConnect = useCallback(
     (params: any) => setEdges((eds) => addEdge(params, eds)),

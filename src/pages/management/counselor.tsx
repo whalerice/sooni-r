@@ -71,9 +71,7 @@ export default function ManagementCounselor() {
     setTableParams(data);
   };
 
-  const onSearch = (e: any) => {
-    // console.log(e);
-  };
+  const onSearch = () => {};
 
   return (
     <>

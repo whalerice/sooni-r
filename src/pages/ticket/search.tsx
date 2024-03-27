@@ -88,9 +88,7 @@ export default function TicketSearch() {
     setTableParams(data);
   };
 
-  const onSearch = (e: any) => {
-    // console.log(e);
-  };
+  const onSearch = () => {};
 
   return (
     <>

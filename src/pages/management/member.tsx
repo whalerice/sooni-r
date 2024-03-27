@@ -56,9 +56,7 @@ export default function ManagementMember() {
     setTableParams(data);
   };
 
-  const onSearch = (e: any) => {
-    // console.log(e);
-  };
+  const onSearch = () => {};
 
   return (
     <>

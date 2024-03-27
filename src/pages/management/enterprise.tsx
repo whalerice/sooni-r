@@ -97,9 +97,7 @@ const ManagementEnterprise = () => {
     setTableParams(data);
   };
 
-  const onSearch = (e: any) => {
-    // console.log('onSearch', e);
-  };
+  const onSearch = () => {};
 
   return (
     <>
