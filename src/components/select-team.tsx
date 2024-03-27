@@ -23,7 +23,7 @@ export default function SelectTeam(props: PropsType) {
 
   return (
     <Select
-      style={styles}
+      style={{ ...styles, width: '100%', minWidth: '12rem' }}
       labelInValue
       placeholder="팀 선택"
       onChange={(e) => onReturn(e)}

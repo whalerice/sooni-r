@@ -1,19 +1,15 @@
-// import type { Dayjs } from 'dayjs';
 import SelectTeam from '@/components/select-team';
 import {
   Button,
   Card,
   DatePicker,
   Input,
-  Flex,
   Select,
   SelectProps,
   Space,
-  Tooltip,
-  // Tooltip,
+  Form,
 } from 'antd';
-import { RedoOutlined, SearchOutlined } from '@ant-design/icons';
-import { useState } from 'react';
+import { SearchOutlined } from '@ant-design/icons';
 import { SearchItemTypes } from '@/lib/enums';
 
 interface IPropsItems {
@@ -28,124 +24,111 @@ type Props = {
   search: (e: any) => void;
 };
 
-type dataTaype = {
-  idx: number;
-  type: string;
-  value: any;
-};
-
 const { RangePicker } = DatePicker;
 const dateFormat = 'YYYY-MM-DD';
 
 const DataTableSearch = (props: Props) => {
+  const [form] = Form.useForm();
   const { search, items } = props;
-  const [data, setData] = useState<dataTaype[]>([]);
-
-  const callback = (idx: number, type: string, value: any) => {
-    for (let i = 0; i < data.length; i++) {
-      if (data[i].idx === idx) {
-        data.splice(i, 1);
-        i--;
-      }
-    }
-    setData([...data, { idx, type, value }]);
-  };
-
-  const onSearch = () => {
-    const result = data.filter((e) => e.value && e.value.length !== 0);
-    console.log(result);
-    search(result);
-  };
 
   const onReset = () => {
-    console.log('reset');
+    form.resetFields();
+    search(null);
+  };
+
+  const onSearch = (values: any) => {
+    search(values);
   };
 
   return (
     <Card size="small" className="data-table-search">
-      <Flex wrap="wrap" gap={5}>
+      <Form form={form} onFinish={onSearch}>
         {items.map((item, idx) => {
           if (item.type === SearchItemTypes.TEXT && item.title) {
             return (
-              <Space.Compact key={idx} style={{ flex: 'auto' }}>
-                <Input
-                  onChange={(e) => callback(idx, item.type, e.target.value)}
-                  addonBefore={item.title}
-                  placeholder={item.placeholder}
-                  allowClear
-                />
-              </Space.Compact>
+              <Form.Item name={idx} key={idx}>
+                <Space.Compact block>
+                  <Input
+                    addonBefore={item.title}
+                    placeholder={item.placeholder}
+                  />
+                </Space.Compact>
+              </Form.Item>
             );
           }
           if (item.type === SearchItemTypes.TEXT && !item.title) {
             return (
-              <Input
-                style={{ minWidth: '20rem', flex: 1 }}
-                key={idx}
-                onChange={(e) => callback(idx, item.type, e.target.value)}
-                prefix={<SearchOutlined />}
-                placeholder={item.placeholder}
-                allowClear
-                onPressEnter={onSearch}
-              />
+              <Form.Item name={idx} key={idx}>
+                <Input
+                  prefix={<SearchOutlined />}
+                  placeholder={item.placeholder}
+                  allowClear
+                  onPressEnter={onSearch}
+                />
+              </Form.Item>
             );
           }
           if (item.type === SearchItemTypes.DATERANGE) {
             return (
-              <RangePicker
-                style={{ flex: 'auto' }}
-                key={idx}
-                format={dateFormat}
-                onChange={(_, dateStrings) =>
-                  callback(idx, item.type, dateStrings)
-                }
-              />
+              <Form.Item name={idx} key={idx}>
+                <RangePicker
+                  style={{ width: '100%' }}
+                  format={dateFormat}
+                  allowClear
+                />
+              </Form.Item>
             );
           }
           if (item.type === SearchItemTypes.SELECT) {
             return (
-              <Select
-                key={idx}
-                style={{ minWidth: '12rem', flex: 1 }}
-                labelInValue
-                placeholder={item.placeholder}
-                onChange={(e) => callback(idx, item.type, e)}
-                options={item.options}
-              />
+              <Form.Item name={idx} key={idx}>
+                <Select
+                  style={{ width: '100%', minWidth: '12rem' }}
+                  labelInValue
+                  placeholder={item.placeholder}
+                  options={item.options}
+                  allowClear
+                />
+              </Form.Item>
             );
           }
           if (item.type === SearchItemTypes.MULTI) {
             return (
-              <Select
-                style={{ minWidth: '12rem', flex: 'auto' }}
-                key={idx}
-                mode="multiple"
-                labelInValue
-                placeholder={item.placeholder}
-                onChange={(e) => callback(idx, item.type, e)}
-                options={item.options}
-              />
+              <Form.Item name={idx} key={idx}>
+                <Select
+                  style={{ width: '100%', minWidth: '12rem' }}
+                  mode="multiple"
+                  labelInValue
+                  placeholder={item.placeholder}
+                  options={item.options}
+                  allowClear
+                />
+              </Form.Item>
             );
           }
           if (item.type === SearchItemTypes.TEAM) {
             return (
-              <SelectTeam
-                key={idx}
-                styles={{ minWidth: '12rem', flex: 1 }}
-                onReturn={(e) => callback(idx, item.type, e)}
-              />
+              <Form.Item name={idx} key={idx}>
+                <SelectTeam onReturn={(e) => form.setFieldValue(idx, e)} />
+              </Form.Item>
             );
           }
-
-          return <></>;
         })}
-        <Button type="primary" onClick={onSearch} style={{ minWidth: '10rem' }}>
-          검색
-        </Button>
-        <Tooltip title="검색 초기화">
-          <Button icon={<RedoOutlined />} onClick={onReset} />
-        </Tooltip>
-      </Flex>
+        <Form.Item>
+          <Space>
+            <Button
+              type="primary"
+              htmlType="submit"
+              style={{ width: '100%', minWidth: '12rem' }}
+            >
+              검색
+            </Button>
+            <Button htmlType="button" onClick={onReset}>
+              Reset
+            </Button>
+          </Space>
+        </Form.Item>
+      </Form>
     </Card>
   );
 };

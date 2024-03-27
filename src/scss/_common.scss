@@ -18,15 +18,16 @@
 
 .data-table-search {
   margin-bottom: 3rem;
-  // [class*='select-single'] {
-  //   min-width: 12rem;
-  //   flex: 1;
-  // }
-  // [class*='input-affix-wrapper'] {
-  //   // width: auto;
-  //   // flex: auto;
-  // }
-  // [class*='btn-primary'] {
-  //   min-width: 10rem;
-  // }
+  [class*='clear-icon'] {
+    line-height: 1;
+  }
+  .#{$prefix}-form {
+    display: flex;
+    flex-flow: wrap;
+    gap: 0.5rem;
+  }
+  .#{$prefix}-form-item {
+    margin: 0;
+    flex: auto;
+  }
 }
