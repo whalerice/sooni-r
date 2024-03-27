@@ -71,7 +71,7 @@ export default function TicketSearch() {
   const { data, isLoading } = useQuery({
     queryKey: ['companyList', getParams(tableParams)],
     queryFn: async () => {
-      console.log(getParams(tableParams));
+      // console.log(getParams(tableParams));
 
       // const res = await apis.company.list(getParams(tableParams));
       // setTableParams({
@@ -88,14 +88,14 @@ export default function TicketSearch() {
     setTableParams(data);
   };
 
-  const onCallBack = (e: any) => {
-    console.log(e);
+  const onSearch = (e: any) => {
+    // console.log(e);
   };
 
   return (
     <>
       <DataTableSearch
-        search={onCallBack}
+        search={onSearch}
         items={[
           { type: SearchItemTypes.DATERANGE },
           {

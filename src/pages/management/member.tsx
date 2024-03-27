@@ -39,7 +39,7 @@ export default function ManagementMember() {
   const { data, isLoading } = useQuery({
     queryKey: ['memberList', getParams(tableParams)],
     queryFn: async () => {
-      console.log(getParams(tableParams));
+      // console.log(getParams(tableParams));
 
       // const res = await apis.company.list(getParams(tableParams));
       // setTableParams({
@@ -57,7 +57,7 @@ export default function ManagementMember() {
   };
 
   const onSearch = (e: any) => {
-    console.log(e);
+    // console.log(e);
   };
 
   return (

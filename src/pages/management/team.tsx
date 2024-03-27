@@ -55,7 +55,7 @@ const ManagementTeam = () => {
   const { data, isLoading } = useQuery({
     queryKey: ['teamList', getParams(tableParams)],
     queryFn: async () => {
-      console.log(getParams(tableParams));
+      // console.log(getParams(tableParams));
 
       const res = await apis.team.list(getParams(tableParams));
       setTableParams({

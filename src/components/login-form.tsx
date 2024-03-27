@@ -21,7 +21,7 @@ function LoginForm() {
       useAuthStore.setState({ user: response, role: response.type });
       navigate('/');
     } catch (error: any) {
-      console.log(error);
+      console.error(error);
       if (error.data) {
         setErrorMessage(error.data.message);
       }

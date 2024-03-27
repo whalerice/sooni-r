@@ -81,7 +81,7 @@ const ManagementEnterprise = () => {
   const { data, isLoading } = useQuery({
     queryKey: ['companyList', getParams(tableParams)],
     queryFn: async () => {
-      console.log(getParams(tableParams));
+      // console.log(getParams(tableParams));
 
       const res = await apis.company.list(getParams(tableParams));
       setTableParams({
@@ -98,7 +98,7 @@ const ManagementEnterprise = () => {
   };
 
   const onSearch = (e: any) => {
-    console.log('onSearch', e);
+    // console.log('onSearch', e);
   };
 
   return (

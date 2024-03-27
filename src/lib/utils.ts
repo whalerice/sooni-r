@@ -11,8 +11,7 @@ export const getParams = (params: TableParams) => ({
   },
 });
 
-export const 첫글자대문자 = (str: string) => {
-  // console.log(str);
+export const FirstUpper = (str: string) => {
   if (str === undefined) {
     return '';
   }
@@ -27,8 +26,8 @@ export const getCurrentPath = (pathname: string) => {
   if (pathname !== '/') {
     const c = pathname.split('/');
 
-    const a = 첫글자대문자(c[1]);
-    const b = 첫글자대문자(c[2]);
+    const a = FirstUpper(c[1]);
+    const b = FirstUpper(c[2]);
     const d = a + b;
 
     str = d;
@@ -44,7 +43,6 @@ export const getPageTitle = (pathname: string, routes: RoutesType[]) => {
 
   routes[0].children?.map((e) => {
     if (e.id === current) {
-      console.log(e);
       str = [{ title: e.label }];
     }
     if (e.children) {

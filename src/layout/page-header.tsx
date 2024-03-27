@@ -13,7 +13,7 @@ const PageHeader = () => {
 
   useEffect(() => {
     setBreadcrumbItem(getPageTitle(pathname, routes));
-    console.log(current);
+    // console.log(current);
   }, [pathname]);
 
   return (

@@ -7,7 +7,7 @@ function CounselorStatus() {
   const { status } = useAuthStore();
 
   const onChange = (value: any) => {
-    console.log(value);
+    // console.log(value);
     useAuthStore.setState({ status: value.value });
   };
 
