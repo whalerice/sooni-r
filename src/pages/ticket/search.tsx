@@ -102,7 +102,6 @@ export default function TicketSearch() {
             type: SearchItemTypes.MULTI,
             placeholder: '티켓 상태',
             options: [
-              { label: '전체', value: 0 },
               { label: '대기', value: 1 },
               { label: '상담중', value: 2 },
               { label: '유후', value: 3 },

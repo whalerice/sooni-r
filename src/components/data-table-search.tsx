@@ -1,4 +1,5 @@
 // import type { Dayjs } from 'dayjs';
+import SelectTeam from '@/components/select-team';
 import {
   Button,
   Card,
@@ -51,7 +52,7 @@ const DataTableSearch = (props: Props) => {
   };
 
   const onSearch = () => {
-    const result = data.filter((e) => e.value);
+    const result = data.filter((e) => e.value && e.value.length !== 0);
     console.log(result);
     search(result);
   };
@@ -128,17 +129,10 @@ const DataTableSearch = (props: Props) => {
           }
           if (item.type === SearchItemTypes.TEAM) {
             return (
-              <Select
+              <SelectTeam
                 key={idx}
-                style={{ minWidth: '12rem', flex: 1 }}
-                labelInValue
-                placeholder="팀 선택"
-                onChange={(e) => callback(idx, item.type, e)}
-                options={[
-                  { label: '이마트1팀', value: 33 },
-                  { label: 'NH1팀', value: 90 },
-                  { label: '퀀텀1팀', value: 10 },
-                ]}
+                styles={{ minWidth: '12rem', flex: 1 }}
+                onReturn={(e) => callback(idx, item.type, e)}
               />
             );
           }
